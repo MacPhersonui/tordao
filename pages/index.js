@@ -23,8 +23,7 @@ const Home = () => {
   } = wallet
 
   const web3 = new Web3(ethereum)
-  const [balance, setBalance] = useState(0)
-  const [mintedNumber, setMintedNumber] = useState(0)
+  const [showMobileNav, setShowMobileNav] = useState(false)
 
   // const { nft } = tokenConfig
   // const nftContract = new web3.eth.Contract(nft.abi, nft.address)
@@ -45,20 +44,20 @@ const Home = () => {
   return (
     <main>
       <Head>
-        <title>Tordao</title>
+        <title>Ruby</title>
         <meta itemProp="image" content="/logo.png" />
         <meta charSet="utf-8" />
         <meta name="renderer" content="webkit" />
-        <meta name="author" content="Tordao" />
-        <meta name="generator" content="Tordao" />
-        <meta name="copyright" content="Tordao" />
+        <meta name="author" content="Ruby" />
+        <meta name="generator" content="Ruby" />
+        <meta name="copyright" content="Ruby" />
         {/* <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta httpEquiv="Cache-Control" content="no-transform" />
         <meta httpEquiv="Cache-Control" content="no-siteapp" /> */}
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="bookmark" href="/favicon.ico" />
-        <meta name="description" content="Tordao" />
-        <meta name="keywords" content="Tordao" />
+        <meta name="description" content="Ruby" />
+        <meta name="keywords" content="Ruby" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <script
           dangerouslySetInnerHTML={{
@@ -84,13 +83,10 @@ const Home = () => {
               <img src="/img/effects_left/effects_3.png" className={styles.effects_3}></img>
               <img src="/img/effects_left/effects_3.png" className={styles.effects_4}></img>
               <img src="/img/effects_left/effects_5.png" className={styles.effects_5}></img>
-              <img src="/img/effects_left/effects_6.png" className={styles.effects_6}></img><img
-                src="/img/effects_left/effects_7.png"
-                className={styles.effects_7}></img><img
-                  src="/img/effects_left/effects_8.png"
-                  className={styles.effects_8}></img><img
-                    src="/img/effects_left/effects_9.png"
-                    className={styles.effects_9}></img>
+              <img src="/img/effects_left/effects_6.png" className={styles.effects_6}></img>
+              <img src="/img/effects_left/effects_7.png"className={styles.effects_7}></img>
+              <img src="/img/effects_left/effects_8.png"className={styles.effects_8}></img>
+              <img src="/img/effects_left/effects_9.png" className={styles.effects_9}></img>
             </div>
           </div>
           <div className={styles.right}>
@@ -109,22 +105,32 @@ const Home = () => {
             </div>
           </div>
         </div>
-
+        
+        <i className={styles.toggle} onClick={()=>setShowMobileNav(true)}>≡</i>
         <nav className={styles.navbar}>
           <div className={styles.menu_text_box}>
-            <div className={styles.left_text}>
-              <a href="/fusion2021/#block-info">HOME</a>
-              <a
-                href="/fusion2021/#block-arc">DOCS</a><a className="button-module--btn--tjO7e"
-                  href="/fusion2021/#block-playable">COMMUNITY</a></div>
-            <div className={styles.right_text}>
-              <a className="button-module--btn--tjO7e"
-                href="/fusion2021/#block-stage">INFO</a><a className="button-module--btn--tjO7e"
-                  href="/fusion2021/#block-guests">IDO</a><a className="button-module--btn--tjO7e"
-                    href="/fusion2021/#block-market">BUY TOR</a></div>
+              <div className={styles.left_text}>
+                <a>HOME</a>
+                <a>DOCS</a>
+                <a>COMMUNITY</a>
+              </div>
+              <div className={styles.right_text}>
+                <a>INFO</a>
+                <a>IDO</a>
+                <a>BUY TOR</a>
+              </div>
           </div>
         </nav>
-
+        <nav className={cx(styles.mobile_nav, { hide: showMobileNav})} onClick={()=>setShowMobileNav(false)}>
+          <ul onClick={(e)=>{ e.stopPropagation() }}>
+              <li>HOME</li>
+              <li>DOCS</li>
+              <li>COMMUNITY</li>
+              <li>INFO</li>
+              <li>IDO</li>
+              <li>BUY TOR</li>
+          </ul>
+        </nav>
 
 
         <div className={styles.main}>
@@ -153,16 +159,16 @@ const Home = () => {
               <div className={styles.left}>
                 <div className={styles.Introduction}>
                   <h1 className={styles.title}>Introduction</h1>
-                  <p className={styles.text}>The Onion Router DAO is a decentralized autonomous organization that aims to create a comprehensive platform integrating DEX, Defi, NFT, DAO and other industry trends by collaborating with like-minded people around the world to become the traffic portal in the WEB3.0 era. The overall architecture of &quot;The Onion Router DAO&quot; is based on &quot;The Onion Router&quot; platform for construction and governance. TOR is the only governance and rights token of the platform. TOR holders will have the priority to participate in all sectors of the platform.</p>
+                  <p className={styles.text}>The Onion Router DAO is a decentralized autonomous organization that aims to create a comprehensive platform integrating DEX, Defi, NFT, DAO and other industry trends by collaborating with like-minded people around the world to become the traffic portal in the WEB3.0 era. The overall architecture of "The Onion Router DAO" is based on "The Onion Router" platform for construction and governance. TOR is the only governance and rights token of the platform. TOR holders will have the priority to participate in all sectors of the platform.</p>
                 </div>
                 <div className={styles.EconomicModel}>
                   <div className={styles.title}>Economic Model</div>
-                  <div className={styles.text}>Total supply:2 million<br/>
-25% IDO: 500,000（200000 for the first round + 200000 for the second round + 100000 for the third round）<br/>
-25% Liquidity Pool: 500,000<br/>
-50% DAO Treasury: 1million<br/>
-<br/>
-The team does not reserve any funds, all of which are distributed by the DAO organization.</div>
+                  <div className={styles.text}>Total supply：2 million<br />
+                    25% IDO: 500,000（200000 for the first round + 200000 for the second round + 100000 for the third round）<br />
+                    25% Liquidity Pool: 500,000<br />
+                    50% DAO Treasury: 1million<br />
+                    <br />
+                    The team does not reserve any funds, all of which are distributed by the DAO organization.</div>
                 </div>
               </div>
               <div className={styles.right}>
@@ -174,72 +180,6 @@ The team does not reserve any funds, all of which are distributed by the DAO org
                 </ul>
               </div>
 
-            </div>
-            <div className={styles.plant_3}>
-              <div className={styles.platitle}>Inital digital assects offering</div>
-              <img className={styles.line} src="/img/ido_line.png"></img>
-              <ul className={styles.round_list}>
-                <li><img className={styles.round_img} src="/img/ido_round_1h.png"></img></li>
-                <li><img className={styles.round_img} src="/img/ido_round_2.png"></img></li>
-                <li><img className={styles.round_img} src="/img/ido_round_3.png"></img></li>
-              </ul>
-              <div className={styles.round_line}></div>
-              <div className={styles.ido_box}>
-                <div className={styles.ido_box_top}>
-                  <p className={styles.box_title}>Round 1</p>
-                  <p className={styles.time}>1 Day 33 Min 54s</p>
-                </div>
-                <ul className={styles.ido_box_body}>
-                  <li>
-                    <p className={styles.box_body_title}>
-                      total
-                    </p>
-                    <h1 className={styles.box_body_number}>2,000,000.00</h1>
-                  </li>
-                  <li>
-                    <p className={styles.box_body_title}>
-                      unit price
-                    </p>
-                    <h1 className={styles.box_body_number}>1.00<p className={styles.unit}>USDT</p></h1>
-                  </li>
-                  <li>
-                    <p className={styles.box_body_title}>
-                      Time remaining
-                    </p>
-                    <h1 className={styles.box_body_number}>1d 21h 22m 54s</h1>
-                  </li>
-                </ul>
-
-              </div>
-              <div className={styles.ido_loading}>
-                <div className={styles.ido_line_out}>                <div className={styles.ido_line_in}></div></div>
-
-                <div className={styles.ido_loading_number}>18%</div>
-
-              </div>
-              <ul className={styles.ido_info}>
-                <li>
-                  <p className={styles.ido_info_title}>
-                    Subscribed<br />amount
-                  </p>
-                  <h1 className={styles.ido_info_number}>6,000.00<p className={styles.unit}>Tor</p></h1>
-                </li>
-                <li>
-                  <p className={styles.ido_info_title}>
-                    Subscription<br />target amount
-                  </p>
-                  <h1 className={styles.ido_info_number}>2,000,000.00<p className={styles.unit}>USDT</p></h1>
-                </li>
-                <li>
-                  <p className={styles.ido_info_title}>
-                    Subscribed<br />Status
-                  </p>
-                  <h1 className={cx(styles.ido_info_number, styles.start)}>start subscription</h1>
-                </li>
-              </ul>
-              <div className={styles.buy_box}>
-                <input type="button" value="" className={styles.buy}></input>
-              </div>
             </div>
           </div>
         </div>
