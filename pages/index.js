@@ -159,7 +159,7 @@ const Home = () => {
               <div className={styles.left}>
                 <div className={styles.Introduction}>
                   <h1 className={styles.title}>Introduction</h1>
-                  <p className={styles.text}>The Onion Router DAO is a decentralized autonomous organization that aims to create a comprehensive platform integrating DEX, Defi, NFT, DAO and other industry trends by collaborating with like-minded people around the world to become the traffic portal in the WEB3.0 era. The overall architecture of "The Onion Router DAO" is based on "The Onion Router" platform for construction and governance. TOR is the only governance and rights token of the platform. TOR holders will have the priority to participate in all sectors of the platform.</p>
+                  <p className={styles.text}>The Onion Router DAO is a decentralized autonomous organization that aims to create a comprehensive platform integrating DEX, Defi, NFT, DAO and other industry trends by collaborating with like-minded people around the world to become the traffic portal in the WEB3.0 era. The overall architecture of &quot;The Onion Router DAO&quot; is based on &quot;The Onion Router&quot; platform for construction and governance. TOR is the only governance and rights token of the platform. TOR holders will have the priority to participate in all sectors of the platform.</p>
                 </div>
                 <div className={styles.EconomicModel}>
                   <div className={styles.title}>Economic Model</div>
