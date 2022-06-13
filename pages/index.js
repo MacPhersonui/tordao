@@ -44,20 +44,20 @@ const Home = () => {
   return (
     <main>
       <Head>
-        <title>Ruby</title>
+        <title>TorDao</title>
         <meta itemProp="image" content="/logo.png" />
         <meta charSet="utf-8" />
         <meta name="renderer" content="webkit" />
-        <meta name="author" content="Ruby" />
-        <meta name="generator" content="Ruby" />
-        <meta name="copyright" content="Ruby" />
+        <meta name="author" content="TorDao" />
+        <meta name="generator" content="TorDao" />
+        <meta name="copyright" content="TorDao" />
         {/* <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta httpEquiv="Cache-Control" content="no-transform" />
         <meta httpEquiv="Cache-Control" content="no-siteapp" /> */}
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="bookmark" href="/favicon.ico" />
-        <meta name="description" content="Ruby" />
-        <meta name="keywords" content="Ruby" />
+        <meta name="description" content="TorDao" />
+        <meta name="keywords" content="TorDao" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <script
           dangerouslySetInnerHTML={{
