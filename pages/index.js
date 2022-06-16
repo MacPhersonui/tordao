@@ -112,10 +112,8 @@ const Home = () => {
               <div className={styles.left_text}>
                 <a>HOME</a>
                 <a>DOCS</a>
-                <a>COMMUNITY</a>
               </div>
               <div className={styles.right_text}>
-                <a>INFO</a>
                 <a>IDO</a>
                 <a>BUY TOR</a>
               </div>
@@ -125,8 +123,6 @@ const Home = () => {
           <ul onClick={(e)=>{ e.stopPropagation() }}>
               <li>HOME</li>
               <li>DOCS</li>
-              <li>COMMUNITY</li>
-              <li>INFO</li>
               <li>IDO</li>
               <li>BUY TOR</li>
           </ul>
