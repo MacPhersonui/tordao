@@ -136,6 +136,7 @@
       align-items: center;
       justify-content: center;
       margin-top: 100px;
+      cursor: pointer;
       .community {
         background: url(../public/img/community_btn.png) 100% no-repeat;
         width: 160px;
@@ -418,164 +419,6 @@
   animation: bink 2s infinite;
 }
 
-.plant_3 {
-  position: relative;
-  margin-bottom: 100px;
-  background: url(../public/img/ido_background.png) no-repeat center;
-
-
-  .platitle {
-    font-size: 28px;
-    color: #B75E70;
-    text-align: center;
-    margin-top: 130px;
-    font-family: Robodron;
-    line-height: 35px;
-  }
-
-  .line {
-    width: 100%;
-    margin: auto 0px;
-    min-width: 400px;
-    margin-top: 50px;
-  }
-
-  .round_list {
-    margin-top: 50px;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-
-    .round_img {
-      height: 60px;
-    }
-  }
-
-  .round_line {
-    background: url(../public/img/round_1_line.png) 100% center no-repeat;
-    height: 60px;
-    background-size: cover;
-    margin: 10px 100px;
-  }
-
-  .ido_box {
-    background: url(../public/img/ido_box.png) 100% center no-repeat;
-    height: 350px;
-    width: 100%;
-    background-size: cover;
-    /* margin: 10px 100px; */
-    position: absolute;
-    bottom: 180px;
-    padding: 106px 120px;
-
-    .ido_box_top {
-      position: relative;
-      color: white;
-      display: flex;
-      width: 100%;
-      height: 32px;
-      align-items: center;
-      padding: 0 11px;
-      justify-content: space-between;
-
-      .box_title {
-        font-family: Robodron;
-        font-size: 12px;
-      }
-    }
-
-    .ido_box_body {
-      color: white;
-      list-style: none;
-      display: flex;
-      justify-content: space-between;
-      padding: 20px 25px;
-      height: 107px;
-      align-items: center;
-
-      li {
-        margin: 0 10px;
-
-        .box_body_title {
-          text-align: center;
-          font-family: Robodron;
-          font-size: 12px;
-        }
-
-        .box_body_number {
-          font-size: 24px;
-          margin-top: 5px;
-          display: flex;
-          text-align: center;
-          width: 100%;
-          justify-content: center;
-        }
-      }
-    }
-
-  }
-
-  .ido_loading {
-    padding-top: 200px;
-    box-sizing: border-box;
-    display: flex;
-
-    .ido_line_out {
-      width: 850px;
-      height: 20px;
-      border: #B75E70 solid 1px;
-      border-radius: 10px;
-      position: relative;
-
-      .ido_line_in {
-        width: 100px;
-        height: 14px;
-        background-color: #B75E70;
-        position: absolute;
-        top: 2px;
-        border-radius: 10px;
-        left: 2px;
-      }
-
-
-    }
-
-    .ido_loading_number {
-      color: #B75E70;
-      font-family: Robodron;
-      margin-left: 20px;
-    }
-  }
-
-  .ido_info {
-    color: white;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    margin-top: 40px;
-    margin-bottom: 50px;
-
-    .ido_info_title {
-      color: #B75E70;
-      font-family: Robodron;
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-
-    .ido_info_number {
-      margin-top: 10px;
-      display: flex;
-      font-size: 24px;
-
-      .unit {
-        font-size: 12px;
-      }
-    }
-  }
-
-
-}
-
 .buy_box {
   display: flex;
   margin-top: 50px;
@@ -597,8 +440,23 @@
 }
 
 .plant_2 {
-  height: 700px;
-
+  height: 500px;
+  margin-bottom: 100px;
+  .plant_2_inner{
+    width: 800px;
+    margin: 0 auto;
+    background: url(../public/instrction.png) no-repeat center left/auto 50%;
+    height: 100%;
+    .plant_2_text{
+      background: url(../public/instrction_title.png) no-repeat center 180px/105% auto;
+      color: #fff;
+      height: 100%;
+      margin-left: 380px;
+      padding-top: 250px;
+      font-size: 16px;
+      line-height: 1.5em;
+    }
+  }
   .left {
     float: left;
     width: 45%;
@@ -664,6 +522,34 @@
     }
   }
 }
+.plant_3 {
+  background: url(../public/token.png) no-repeat center / auto 90%;
+  height: 500px;
+}
+
+.plant_4 {
+  height: 700px;
+  .plant_4_title {
+    background: url(../public/roadmap_title.png) no-repeat center top/ auto 80px;
+    height: 200px;
+  }
+  ul{
+    width: 1000px;
+    margin: 0 auto;
+    li{
+      background: url(../public/roadmap_li.png) no-repeat  center/ 100% auto;
+      width: 33%;
+      height: 270px;
+      display: inline-block;
+      box-sizing: border-box;
+      color: #fff;
+      font-size: 14px;
+      padding: 22px 73px 18px 84px;
+      line-height: 1.1em;
+      }
+  }
+}
+
 
 @keyframes bink {
   0% {
@@ -847,7 +733,6 @@
         align-items: center;
         justify-content: center;
         margin-top: 100px;
-
         .community {
           background: url(../public/img/community_btn.png) 100% no-repeat;
           width: 150px;
@@ -877,6 +762,123 @@
         }
       }
     }
+    .plant_2 {
+      height: 500px;
+      margin-bottom: 100px;
+
+      .plant_2_inner {
+        width: 800px;
+        margin: 0 auto;
+        background: url(../public/instrction.png) no-repeat center left/auto 50%;
+        height: 100%;
+
+        .plant_2_text {
+          background: url(../public/instrction_title.png) no-repeat center 180px/105% auto;
+          color: #fff;
+          height: 100%;
+          margin-left: 380px;
+          padding-top: 250px;
+          font-size: 16px;
+          line-height: 1.5em;
+        }
+      }
+
+      .left {
+        float: left;
+        width: 45%;
+      }
+
+      .right {
+        float: right;
+        width: 45%;
+      }
+
+      .Introduction {
+        .title {
+          background: none;
+          color: #B75E70;
+          font-family: Robodron;
+          margin-top: 20px;
+          height: auto;
+          margin-bottom: 15px;
+        }
+
+        .text {
+          color: #ffffffbf;
+          font-size: 14px;
+          line-height: 24px;
+          margin-top: 30px;
+        }
+      }
+
+      .vision_title {
+        background: none;
+        color: #B75E70;
+        font-family: Robodron;
+        height: auto;
+        margin-bottom: 15px;
+        margin-top: 20px;
+      }
+
+      .vision {
+        color: white;
+
+        li {
+          margin-bottom: 15px;
+          font-size: 16px;
+          color: #ffffff82;
+        }
+      }
+
+      .EconomicModel {
+        .title {
+          background: none;
+          color: #B75E70;
+          font-family: Robodron;
+          height: auto;
+          margin-top: 50px;
+          margin-bottom: 15px;
+        }
+
+        .text {
+          color: #ffffffbf;
+          line-height: 24px;
+          // width: 45%;
+          font-size: 14px;
+        }
+      }
+    }
+    .plant_3 {
+      background: url(../public/token.png) no-repeat center / auto 90%;
+      height: 500px;
+    }
+
+    .plant_4 {
+      height: 700px;
+
+      .plant_4_title {
+        background: url(../public/roadmap_title.png) no-repeat center top/ auto 80px;
+        height: 200px;
+      }
+
+      ul {
+        width: 1000px;
+        margin: 0 auto;
+
+        li {
+          background: url(../public/roadmap_li.png) no-repeat center/ 100% auto;
+          width: 33%;
+          height: 270px;
+          display: inline-block;
+          box-sizing: border-box;
+          color: #fff;
+          font-size: 14px;
+          padding: 22px 73px 18px 84px;
+          line-height: 1.1em;
+        }
+      }
+    }
+
 
     .title {
       width: 100%;
@@ -1131,164 +1133,6 @@
     animation: bink 2s infinite;
   }
 
-  .plant_3 {
-    position: relative;
-    margin-bottom: 100px;
-    background: url(../public/img/ido_background.png) no-repeat center;
-
-
-    .platitle {
-      font-size: 28px;
-      color: #B75E70;
-      text-align: center;
-      margin-top: 130px;
-      font-family: Robodron;
-      line-height: 35px;
-    }
-
-    .line {
-      width: 100%;
-      margin: auto 0px;
-      min-width: 400px;
-      margin-top: 50px;
-    }
-
-    .round_list {
-      margin-top: 50px;
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-
-      .round_img {
-        height: 60px;
-      }
-    }
-
-    .round_line {
-      background: url(../public/img/round_1_line.png) 100% center no-repeat;
-      height: 60px;
-      background-size: cover;
-      margin: 10px 100px;
-    }
-
-    .ido_box {
-      background: url(../public/img/ido_box.png) 100% center no-repeat;
-      height: 350px;
-      width: 100%;
-      background-size: cover;
-      /* margin: 10px 100px; */
-      position: absolute;
-      bottom: 180px;
-      padding: 106px 120px;
-
-      .ido_box_top {
-        position: relative;
-        color: white;
-        display: flex;
-        width: 100%;
-        height: 32px;
-        align-items: center;
-        padding: 0 11px;
-        justify-content: space-between;
-
-        .box_title {
-          font-family: Robodron;
-          font-size: 12px;
-        }
-      }
-
-      .ido_box_body {
-        color: white;
-        list-style: none;
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 25px;
-        height: 107px;
-        align-items: center;
-
-        li {
-          margin: 0 10px;
-
-          .box_body_title {
-            text-align: center;
-            font-family: Robodron;
-            font-size: 12px;
-          }
-
-          .box_body_number {
-            font-size: 24px;
-            margin-top: 5px;
-            display: flex;
-            text-align: center;
-            width: 100%;
-            justify-content: center;
-          }
-        }
-      }
-
-    }
-
-    .ido_loading {
-      padding-top: 200px;
-      box-sizing: border-box;
-      display: flex;
-
-      .ido_line_out {
-        width: 850px;
-        height: 20px;
-        border: #B75E70 solid 1px;
-        border-radius: 10px;
-        position: relative;
-
-        .ido_line_in {
-          width: 100px;
-          height: 14px;
-          background-color: #B75E70;
-          position: absolute;
-          top: 2px;
-          border-radius: 10px;
-          left: 2px;
-        }
-
-
-      }
-
-      .ido_loading_number {
-        color: #B75E70;
-        font-family: Robodron;
-        margin-left: 20px;
-      }
-    }
-
-    .ido_info {
-      color: white;
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      margin-top: 40px;
-      margin-bottom: 50px;
-
-      .ido_info_title {
-        color: #B75E70;
-        font-family: Robodron;
-        font-size: 12px;
-        margin-bottom: 10px;
-      }
-
-      .ido_info_number {
-        margin-top: 10px;
-        display: flex;
-        font-size: 24px;
-
-        .unit {
-          font-size: 12px;
-        }
-      }
-    }
-
-
-  }
-
   .buy_box {
     display: flex;
     margin-top: 50px;
@@ -1310,15 +1154,34 @@
   }
 
   .plant_2 {
-    height: 1220px;
+    height: 500px !important;
+    margin-bottom: 0px !important;
+
+    .plant_2_inner {
+      width: 100% !important;
+      margin: 0 auto;
+      background: url(../public/instrction.png) no-repeat center left/auto 50%;
+      height: 100%;
+
+      .plant_2_text {
+        background: url(../public/instrction_title.png) no-repeat left 10px/120% auto !important;
+        color: #fff;
+        height: 100%;
+        margin-left: 0 !important;
+        padding-top: 70px !important;
+        font-size: 16px;
+        line-height: 1.5em;
+      }
+    }
+
     .left {
       float: left;
-      width: 100%;
+      width: 45%;
     }
 
     .right {
       float: right;
-      width: 100%;
+      width: 45%;
     }
 
     .Introduction {
@@ -1376,4 +1239,38 @@
       }
     }
   }
+
+  .plant_3 {
+    background: url(../public/token.png) no-repeat center / 100% auto !important;
+    height: 500px;
+  }
+
+  .plant_4 {
+    height: 1050px !important;
+
+    .plant_4_title {
+      background: url(../public/roadmap_title.png) no-repeat center top/ auto 80px;
+      height: 100px !important;
+    }
+
+    ul {
+      width: 100% !important;
+      margin: 0 auto;
+
+      li {
+        background: url(../public/roadmap_li.png) no-repeat center/ 100% auto;
+        width: 100% !important;
+        height: 270px;
+        display: inline-block;
+        box-sizing: border-box;
+        color: #fff;
+        font-size: 14px;
+        padding: 22px 73px 18px 84px;
+        line-height: 1.1em;
+      }
+    }
+  }
+
+
+
 }

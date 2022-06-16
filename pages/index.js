@@ -156,30 +156,36 @@ const Home = () => {
 
             </div>
             <div className={styles.plant_2}>
-              <div className={styles.left}>
-                <div className={styles.Introduction}>
-                  <h1 className={styles.title}>Introduction</h1>
-                  <p className={styles.text}>The Onion Router DAO is a decentralized autonomous organization that aims to create a comprehensive platform integrating DEX, Defi, NFT, DAO and other industry trends by collaborating with like-minded people around the world to become the traffic portal in the WEB3.0 era. The overall architecture of &quot;The Onion Router DAO&quot; is based on &quot;The Onion Router&quot; platform for construction and governance. TOR is the only governance and rights token of the platform. TOR holders will have the priority to participate in all sectors of the platform.</p>
-                </div>
-                <div className={styles.EconomicModel}>
-                  <div className={styles.title}>Economic Model</div>
-                  <div className={styles.text}>Total supply：2 million<br />
-                    25% IDO: 500,000（200000 for the first round + 200000 for the second round + 100000 for the third round）<br />
-                    25% Liquidity Pool: 500,000<br />
-                    50% DAO Treasury: 1million<br />
-                    <br />
-                    The team does not reserve any funds, all of which are distributed by the DAO organization.</div>
+              <div className={styles.plant_2_inner}>
+                <div className={styles.plant_2_text}>
+                  The Onion Router DAO is a decentralized autonomous 
+                  organization that aims to create a comprehensive platform
+                  integrating DEX, Defi, NFT, DAO and other industry trends 
+                  by collaborating with like-minded people around the world 
+                  to become the traffic portal in the WEB3.0 era. The overall 
+                  architecture of "The Onion Router DAO" is based on 
+                  "The Onion Router" platform for construction and governance. 
+                  TOR is the only governance and rights token of the platform. 
+                  TOR holders will have the priority to participate in all sectors 
+                  of the platform.
                 </div>
               </div>
-              <div className={styles.right}>
-                <div className={styles.vision_title}>Vision</div>
-                <ul className={styles.vision}>
-                  <li>——The smart contract of The Onion Router DAO sets the rules of the organization and holds the treasury funds. Once the contract takes effect on the BSC, no one can change the rules unless through voting. The consensus of The Onion Router DAO is established in a distributed manner, which is sufficient for organization members to trust the network.</li>
-                  <li>——The treasury is bound by smart contracts, which means that no one can use the treasury funds without the approval of the DAO organization. This means that The Onion Router DAO does not require a central authority, instead, the DAO as a whole will make decisions and automatically authorize payments according to the vote result.</li>
-                  <li>——The Onion Router, committed to being a comprehensive platform integrating DEX, Defi, NFT, DAO and other industry trends and becoming the traffic portal in the WEB3.0 era, is built and governed by the DAO organization, and the future rights and interests will definitely be shared by the members of the DAO organization, </li>
-                </ul>
-              </div>
-
+            </div>
+            <div className={styles.plant_3}>
+            </div>
+            <div className={styles.plant_4}>
+              <div className={styles.plant_4_title}></div>
+              <ul>
+                <li>
+                  The treasury is bound by smart contracts, which means that no one can use the treasury funds without the approval of the DAO organization. This means that The Onion Router DAO does not require a central authority, instead, the DAO as a whole will make decisions and automatically authorize payments according to the vote result.
+                </li>
+                <li>
+                  The treasury is bound by smart contracts, which means that no one can use the treasury funds without the approval of the DAO organization. This means that The Onion Router DAO does not require a central authority, instead, the DAO as a whole will make decisions and automatically authorize payments according to the vote result.
+                </li>
+                <li>
+                  The treasury is bound by smart contracts, which means that no one can use the treasury funds without the approval of the DAO organization. This means that The Onion Router DAO does not require a central authority, instead, the DAO as a whole will make decisions and automatically authorize payments according to the vote result.
+                </li>
+              </ul>
             </div>
           </div>
         </div>
