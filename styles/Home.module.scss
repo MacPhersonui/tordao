@@ -551,15 +551,26 @@
     width: 1000px;
     margin: 0 auto;
     li{
-      background: url(../public/roadmap_li.png) no-repeat  center/ 130% auto;
-      width: 33%;
-      height: 350px;
-      display: inline-block;
-      box-sizing: border-box;
-      color: #fff;
-      font-size: 16px;
-      padding: 30px 60px 18px 60px;
-      line-height: 1.25em;
+        background: url(../public/roadmap_li.png) no-repeat  center/ 130% auto;
+        width: 25%;
+        height: 260px;
+        display: inline-block;
+        box-sizing: border-box;
+        color: #fff;
+        font-size: 14px;
+        padding: 20px 60px 20px 60px;
+        line-height: 1.25em;
+        vertical-align: top;
+        h1{
+          color: #B75E70;
+          font-size: 16px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        p{
+          line-height: 1.3em;
+          margin: 5px 0;
+        }
       }
   }
 }
@@ -709,10 +720,12 @@
       background: #000;
       height: 100%;
       float: right;
+      padding-top: 70px;
       li{
-        color: #B75E70;
+        color: #fd4635;
         text-align: center;
         padding: 20px 0;
+        font-family: NetflixSans;
       }
     }
   }

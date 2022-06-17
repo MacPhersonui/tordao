@@ -173,13 +173,21 @@ const Home = () => {
               <div className={styles.plant_4_title}></div>
               <ul>
                 <li>
-                  The treasury is bound by smart contracts, which means that no one can use the treasury funds without the approval of the DAO organization. This means that The Onion Router DAO does not require a central authority, instead, the DAO as a whole will make decisions and automatically authorize payments according to the vote result.
+                  <h1>Second quarter of 2022</h1>
+                  <p>Complete Onion DAO basic framework building based on Onion platform</p>
+                  <p>Complete TOR token IDO</p>
                 </li>
                 <li>
-                  The treasury is bound by smart contracts, which means that no one can use the treasury funds without the approval of the DAO organization. This means that The Onion Router DAO does not require a central authority, instead, the DAO as a whole will make decisions and automatically authorize payments according to the vote result.
+                  <h1>The third quarter of 2022</h1>
+                  <p>Launch the Onion 's first NFT and further improve the Onion DAO ecosystem</p>
                 </li>
                 <li>
-                  The treasury is bound by smart contracts, which means that no one can use the treasury funds without the approval of the DAO organization. This means that The Onion Router DAO does not require a central authority, instead, the DAO as a whole will make decisions and automatically authorize payments according to the vote result.
+                  <h1>The fourth quarter of 2022</h1>
+                  <p>Layout blockchain games / metaverse ecology</p>
+                </li>
+                <li>
+                  <h1>The first quarter of 2023</h1>
+                  <p>Set the DAO autonomous node and gradually open the permission to make Onion DAO become a real decentralized anonymous DAO</p>
                 </li>
               </ul>
             </div>
