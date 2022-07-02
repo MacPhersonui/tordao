@@ -28,9 +28,15 @@ const HeaderFooter = (props) => {
           <meta name="description" content="TorDao" />
           <meta name="keywords" content="TorDao" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-24E5BG0T8G"></script>
           <script
             dangerouslySetInnerHTML={{
-              __html: ``,
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+
+                  gtag('config', 'G-24E5BG0T8G');`,
             }}
           />
         </Head>
