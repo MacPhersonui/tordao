@@ -44,6 +44,7 @@ export async function inviteRank(req, res) {
         [Op.not]: ""
       }
     },
+    limit: 10,
     order: [
       [Sequelize.col('count'), 'DESC']
     ],
