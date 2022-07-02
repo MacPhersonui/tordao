@@ -30,7 +30,7 @@ const db = {
 };
 
 //user table model
-db.NFT = db.sequelize.import("../model/nft.js")
+db.INVITE = db.sequelize.import("../model/invite.js")
 db.Op = Op;
 
 export default db;

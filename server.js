@@ -3,7 +3,8 @@ import express from 'express'
 import next from 'next'
 import logger from 'morgan'
 import router from './server/router/router'
-
+import bodyParser from 'body-parser'
+import cookieParser from "cookie-parser"
 const port = parseInt(process.env.PORT, 10) || 8000
 const env = process.env.NODE_ENV
 const dev = env !== 'production'
@@ -24,14 +25,17 @@ app
       server.use(logger("dev"))
 
       // Router
+      server.use(cookieParser())
+
+      server.use(
+        bodyParser.urlencoded({
+          extended: true
+        }),
+      )
+      server.use(bodyParser.json())
+      
       router(server, handle)
 
-      server.use(express.json())
-      server.use(
-          express.urlencoded({
-              extended: false,
-          }),
-      )
 
       server.listen(port, (err) => {
           if (err) {

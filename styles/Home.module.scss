@@ -417,7 +417,7 @@
   right: 0;
   bottom: 0;
   display: inline-block;
-
+  z-index: 9999;
   .img {
     width: 250px;
   }
@@ -562,7 +562,7 @@
         line-height: 1.25em;
         vertical-align: top;
         h1{
-          color: #B75E70;
+          color: #eb4233;
           font-size: 16px;
           font-weight: bold;
           margin-bottom: 10px;
@@ -574,6 +574,157 @@
       }
   }
 }
+
+.invite {
+  width: 910px;
+  margin: 0 auto;
+  color: #fff;
+  position: relative;
+  z-index: 999;
+  .invite_title {}
+
+  .invite_content {
+    .invite_left{
+      float: left;
+      .invite_link {
+        background: url(../public/img/invite_people.png) no-repeat center / 100% auto;
+        width: 500px;
+        height: 190px;
+        padding: 65px 90px;
+        .invite_text{
+          font-size: 14px;
+          font-family: NetflixSans;
+          float: left;
+        }
+        .invite_number{
+          float: right;
+          font-family: NetflixSans;
+          b{
+            font-size: 40px;
+            margin-right: 5px;
+            line-height: 1em;
+          }
+          i{
+            font-family: NetflixSans;
+            font-style: normal;
+          }
+        }
+      }
+      .invite_qrcode{
+        background: url(../public/img/invite_link.png) no-repeat center / 100% auto;
+        width: 500px;
+        height: 430px;
+        margin-top: -90px;
+        padding: 80px 100px;
+        font-size: 14px;
+        font-family: NetflixSans;
+        .invite_address {
+          border: 1px solid #334156;
+          border-radius: 4px;
+          padding: 5px 8px;
+          overflow: hidden;
+          margin: 8px 0;
+          white-space: nowrap;
+        }
+        .create_link{
+            background: url(../public/img/invite_btn.png) center/ 100% 100% no-repeat;
+            border: none;
+            color: #fff;
+            padding: 0 30px;
+            height: 42px;
+            cursor: pointer;
+            margin: 15px 0;
+        }
+        .invite_qr{
+          padding: 15px 0;
+          .invite_btns {
+            float: right;
+            button{
+              background: url(../public/img/invite_btn.png) center/ 100% auto no-repeat;
+              border: none;
+              color: #fff;
+              width: 140px;
+              height: 45px;
+              cursor: pointer;
+              span{
+                display: inline-block;
+                width: 90px;
+              }
+              &.copy_link {
+                i{
+                  background: url(../public/img/icon_link.png) center/ 100% auto no-repeat;
+                  display: inline-block;
+                  width: 12px;
+                  height: 12px;
+                  margin-right: 8px;
+                }
+              }
+              &.download_qr {
+                i{
+                  background: url(../public/img/icon_qr.png) center/ 100% auto no-repeat;
+                  display: inline-block;
+                  width: 12px;
+                  height: 12px;
+                  margin-right: 8px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+    .invite_right{
+      float: left;
+      .invite_rank{
+        background: url(../public/img/invite_rank.png) center/ 100% auto no-repeat;
+        width: 500px;
+        height: 586px;
+        margin-left: -110px;
+        padding: 60px 110px;
+        .invite_title{
+            font-size: 14px;
+            font-family: NetflixSans;
+        }
+        .invite_table{
+           border-radius: 5px;
+           border: 1px solid #FF0000;
+           overflow: hidden;
+           width: 100%;
+           margin-top: 10px;
+        }
+        table{
+          font-size: 12px;
+          font-family: NetflixSans;
+          width: 101%;
+          margin: -1px 10px -1px -1px;
+          tr{
+            &:nth-child(odd){
+              background: #0F1319;
+            }
+            &:nth-child(even) {
+              background: #191d22;
+            }
+            th{
+              border: 1px solid #FF0000;
+              text-align: center;
+              padding:7px 10px;
+              font-size: 14px;
+              color: #FF0000;
+              font-weight: bold;
+            }
+            td{
+              border: 1px solid #FF0000;
+              text-align: center;
+              padding:7px 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 
 
 @keyframes bink {
@@ -660,7 +811,7 @@
     right: 20px;
     top: 10px;
     font-size: 40px;
-    z-index: 999999;
+    z-index: 9998;
     font-style: normal;
     cursor: pointer;
   }
@@ -1272,7 +1423,7 @@
   }
 
   .plant_4 {
-    height: 1050px !important;
+    height: 1250px !important;
 
     .plant_4_title {
       background: url(../public/roadmap_title.png) no-repeat center top/ auto 80px;

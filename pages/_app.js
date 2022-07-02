@@ -3,10 +3,10 @@ import { UseWalletProvider } from 'use-wallet'
 
 function MyApp({ Component, pageProps }) {
   return <UseWalletProvider
-        chainId={0x1}
+        chainId={0x38}
         connectors={{
             walletconnect: {
-                rpcUrl: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+                rpcUrl: "https://bsc-dataseed1.ninicoin.io/"
             },
         }}
     >
