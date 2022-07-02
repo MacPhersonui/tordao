@@ -159,7 +159,7 @@ const Home = () => {
                   </li>
                   <li>
                     <h1>The third quarter of 2022</h1>
-                    <p>Launch the Onion 's first NFT and further improve the Onion DAO ecosystem</p>
+                    <p>Launch the Onion &apos;s first NFT and further improve the Onion DAO ecosystem</p>
                   </li>
                   <li>
                     <h1>The fourth quarter of 2022</h1>
