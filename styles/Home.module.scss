@@ -151,16 +151,14 @@
       margin-top: 100px;
       cursor: pointer;
       .community {
-        background: url(../public/img/community_btn.png) 100% no-repeat;
+        background:url(../public/img/community_btn.png) center/ 100% auto no-repeat;
         width: 160px;
         height: 50px;
-        background-size: cover;
 
         &:hover {
-          background: url(../public/img/community_btn_hover.png) 100% no-repeat;
+          background: url(../public/img/community_btn_hover.png) center/ 100% auto no-repeat;
           width: 160px;
           height: 50px;
-          background-size: cover;
         }
       }
 
@@ -923,13 +921,11 @@
         justify-content: center;
         margin-top: 100px;
         .community {
-          background: url(../public/img/community_btn.png) 100% no-repeat;
+          background: url(../public/img/community_btn.png) center/ 100% auto no-repeat;
           width: 150px;
           height: 50px;
-          background-size: 100% auto;
-
           &:hover {
-            background: url(../public/img/community_btn_hover.png) 100% no-repeat;
+            background: url(../public/img/community_btn_hover.png) center/ 100% auto no-repeat;
             width: 160px;
             height: 50px;
           }

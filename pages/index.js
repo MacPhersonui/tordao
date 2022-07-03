@@ -11,6 +11,7 @@ import { getRiseFund } from "../api/api"
 import tokenConfig from "../contract.config"
 import { confirmAlert } from "react-confirm-alert"
 import HeaderFooter from "../layout/HeaderFooter"
+import Link from 'next/link'
 
 const cx = classNames.bind(styles)
 
@@ -126,7 +127,7 @@ const Home = () => {
                   </li>
                 </ul>
                 <div className={styles.plant_btn}>
-                  <div className={styles.community}></div>
+                  <Link href="/invite"><div className={styles.community}></div></Link>
                   <div className={styles.docs}></div>
                 </div>
 
