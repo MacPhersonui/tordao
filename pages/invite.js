@@ -111,6 +111,17 @@ const Home = ({
         return false
     }
 
+    const downloadQR = () => {
+        const canvas = document.querySelector('canvas')
+        console.log(canvas)
+        const href = canvas.toDataURL("image/png")
+        const link = document.createElement("a")
+        link.href = href
+        link.download = 'MyInviteQR.png'
+        const event = new MouseEvent("click")
+        link.dispatchEvent(event)
+    }
+
     return (
         <HeaderFooter activeIndex={1}>
         <ToastContainer />
@@ -156,7 +167,7 @@ const Home = ({
                 </div>
                 <div className={styles.main}>
                     <div className={styles.invite}>
-                        <div className={styles.invite_title}></div>
+                        <div className={styles.invite_titles}></div>
                         <div className={styles.invite_content}>
                             <div className={styles.invite_left}>
                                 <div className={styles.invite_link}>
@@ -185,7 +196,7 @@ const Home = ({
                                                         </Clipboard>
                                                     </li>
                                                     <li>
-                                                        <button className={styles.download_qr}>
+                                                        <button onClick={()=>downloadQR()} className={styles.download_qr}>
                                                             <i></i>
                                                             <span>Download QR</span>
                                                         </button>

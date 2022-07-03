@@ -5,14 +5,7 @@ import Sequelize from 'sequelize';
 const Op = db.Op
 const INVITE = db.INVITE
 
-
-export async function invite(req, res) {
-  const { account } = req.params;
-  if (!account) {
-    res.send({})
-    return
-  }
-
+export async function getInviteCount(account){
   let sql = {
     attributes: [
       "account",
@@ -23,13 +16,42 @@ export async function invite(req, res) {
     }
   }
 
-  await INVITE.findAndCountAll(sql).then(async data => {
-    if (data) {
-      res.send(data)
-    } else {
-      res.send({})
+  let inviteCount = 0
+
+  const data = await INVITE.findAndCountAll(sql)
+  if (data) {
+    inviteCount = data.count
+    let inviterArr = []
+    for (var i = 0; i < data.rows.length; i++) {
+      inviterArr.push(data.rows[i].account)
     }
+    const inviteSecond = await INVITE.count({
+      where: {
+        invite: {
+          [Op.in]: inviterArr
+        }
+      }
+    })
+    inviteCount += inviteSecond
+    return inviteCount
+  } else {
+    return inviteCount
+  }
+}
+
+export async function invite(req, res) {
+  const { account } = req.params;
+  if (!account) {
+    res.send({})
+    return
+  }
+
+  const count = await getInviteCount(account)
+
+  res.send({
+    count: count
   })
+  
 }
 
 export async function inviteRank(req, res) {
@@ -50,13 +72,12 @@ export async function inviteRank(req, res) {
     ],
   }
 
-  await INVITE.findAll(sql).then(async data => {
-    if (data) {
-      res.send(data)
-    } else {
-      res.send([])
-    }
-  })
+  const inviteRank = JSON.parse(JSON.stringify(await INVITE.findAll(sql)))
+  for (var i = 0; i < inviteRank.length; i++) {
+    const count = await getInviteCount(inviteRank[i].invite)
+    inviteRank[i].count = count
+  }
+  res.send(inviteRank)
 }
 
 export async function createInvite(req, res) {
