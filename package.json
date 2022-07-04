@@ -4,8 +4,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "server": "pm2 kill && pm2 start ./processes_dev.json && pm2 logs lemond",
-    "prod": "npm run build && pm2 kill && pm2 start ./processes_prod.json && pm2 logs lemond",
+    "server": "pm2 kill && pm2 start ./processes_dev.json && pm2 logs Ruby",
+    "prod": "npm run build && pm2 kill && pm2 start ./processes_prod.json && pm2 logs Ruby",
     "start": "next start",
     "lint": "next lint"
   },

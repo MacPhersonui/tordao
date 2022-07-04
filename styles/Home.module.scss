@@ -585,6 +585,48 @@
     width: 100%;
     margin-top: 40px;
   }
+  .invite_rule{
+    background: url(../public/img/invite_rule.png) no-repeat center / 100% auto;
+    height: 200px;
+    margin: 0 100px 0 60px;
+    padding: 46px 23px;
+    font-size: 12px;
+    font-family: NetflixSans;
+    .invite_rule_table{
+      margin: 10px 0;
+      .invite_tip {
+        float: right;
+        padding: 0 5px;
+        width: 250px;
+        b{
+          color: #FF0000;
+        }
+      }
+      .invite_weight{
+        float: left;
+        table {
+          td {
+            border: 1px solid #425073;
+            padding: 5px;
+            text-align: center;
+
+            &.red {
+              color: #FF0000;
+            }
+
+            span {
+              display: block;
+
+              &.red {
+                color: #FF0000;
+                font-size: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   .invite_content {
     .invite_left{
@@ -653,7 +695,7 @@
               border: none;
               color: #fff;
               width: 140px;
-              height: 45px;
+              height: 39px;
               cursor: pointer;
               span{
                 display: inline-block;
@@ -671,6 +713,15 @@
               &.download_qr {
                 i{
                   background: url(../public/img/icon_qr.png) center/ 100% auto no-repeat;
+                  display: inline-block;
+                  width: 12px;
+                  height: 12px;
+                  margin-right: 8px;
+                }
+              }
+              &.invite_lists {
+                i {
+                  background: url(../public/img/icon_invite.png) center/ 100% auto no-repeat;
                   display: inline-block;
                   width: 12px;
                   height: 12px;
@@ -734,7 +785,68 @@
   }
 }
 
+.invite_mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(0 0 0 / 73%);
+    z-index: 9999;
+    &.hide{
+      display: none;
+    }
+    .invite_inviter{
+      border: 1px solid #eb4233;
+      background: #000;
+      width: 400px;
+      height: 300px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -150px 0 0 -200px;
+      border-radius: 10px;
+      overflow: auto;
+      color: #fff;
+      font-size: 14px;
+      font-family: NetflixSans;
+      padding: 30px;
+      h1{
+        margin-bottom: 10px;
+      }
+      table {
+        font-size: 12px;
+        font-family: NetflixSans;
+        width: 101%;
+        margin: -1px 10px -1px -1px;
 
+        tr {
+          &:nth-child(odd) {
+            background: #0F1319;
+          }
+
+          &:nth-child(even) {
+            background: #191d22;
+          }
+
+          th {
+            border: 1px solid #FF0000;
+            text-align: center;
+            padding: 7px 10px;
+            font-size: 14px;
+            color: #FF0000;
+            font-weight: bold;
+          }
+
+          td {
+            border: 1px solid #FF0000;
+            text-align: center;
+            padding: 7px 10px;
+          }
+        }
+      }
+    }
+}
 
 @keyframes bink {
   0% {
@@ -1469,6 +1581,55 @@
       margin-top: 90px;
     }
 
+    .invite_rule {
+      background: url(../public/img/invite_link.png) no-repeat center / 100% auto;
+      height: 380px;
+      margin: 0;
+      padding: 76px 70px;
+      font-size: 10px;
+      font-family: NetflixSans;
+      margin-bottom: -100px;
+      .invite_rule_table {
+        margin: 10px 0;
+
+        .invite_tip {
+          float: right;
+          padding: 0 5px;
+          width: 250px;
+
+          b {
+            color: #FF0000;
+          }
+        }
+
+        .invite_weight {
+          float: left;
+          font-size: 6.5px;
+          table {
+            margin-bottom: 5px;
+            td {
+              border: 1px solid #425073;
+              padding: 3px;
+              text-align: center;
+
+              &.red {
+                color: #FF0000;
+              }
+
+              span {
+                display: block;
+
+                &.red {
+                  color: #FF0000;
+                  font-size: 8px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     .invite_content {
       .invite_left {
         float: left;
@@ -1542,7 +1703,7 @@
                 border: none;
                 color: #fff;
                 width: 140px;
-                height: 45px;
+                height: 39px;
                 cursor: pointer;
 
                 span {
@@ -1563,6 +1724,15 @@
                 &.download_qr {
                   i {
                     background: url(../public/img/icon_qr.png) center/ 100% auto no-repeat;
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    margin-right: 8px;
+                  }
+                }
+                &.invite_lists {
+                  i {
+                    background: url(../public/img/icon_invite.png) center/ 100% auto no-repeat;
                     display: inline-block;
                     width: 12px;
                     height: 12px;
@@ -1628,6 +1798,73 @@
                 padding: 7px 10px;
               }
             }
+          }
+        }
+      }
+    }
+  }
+
+  .invite_mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(0 0 0 / 73%);
+    z-index: 9999;
+
+    &.hide {
+      display: none;
+    }
+
+    .invite_inviter {
+      border: 1px solid #eb4233;
+      background: #000;
+      width: 320px;
+      height: 300px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -150px 0 0 -150px;
+      border-radius: 10px;
+      overflow: auto;
+      color: #fff;
+      font-size: 14px;
+      font-family: NetflixSans;
+      padding: 30px;
+
+      h1 {
+        margin-bottom: 10px;
+      }
+
+      table {
+        font-size: 12px;
+        font-family: NetflixSans;
+        width: 101%;
+        margin: -1px 10px -1px -1px;
+
+        tr {
+          &:nth-child(odd) {
+            background: #0F1319;
+          }
+
+          &:nth-child(even) {
+            background: #191d22;
+          }
+
+          th {
+            border: 1px solid #FF0000;
+            text-align: center;
+            padding: 7px 10px;
+            font-size: 14px;
+            color: #FF0000;
+            font-weight: bold;
+          }
+
+          td {
+            border: 1px solid #FF0000;
+            text-align: center;
+            padding: 7px 10px;
           }
         }
       }

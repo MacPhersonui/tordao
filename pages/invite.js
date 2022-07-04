@@ -54,6 +54,9 @@ const Home = ({
     const web3 = new Web3(ethereum)
     const [inviteNum, setInviteNum] = useState(0)
     const [inviteRank, setInviteRank] = useState([])
+    const [inviteList, setInviteList] = useState([])
+    const [showInviteList, setShowInviteList] = useState(true)
+
     const formatAddress = (address) => {
         return address.substr(0, 8) + '...' + address.substr(address.length - 8, 8)
     }
@@ -63,8 +66,10 @@ const Home = ({
         setInviteRank(data)
         const timer = setInterval(async () => {
             if (account) {
-                const {count} = await getInvite(account)
-                setInviteNum(count)
+                const {count,rows} = await getInvite(account)
+                setInviteNum(count.total)
+                console.log(rows)
+                setInviteList(rows)
                 console.log("router", router)
                 const inviter = router.query.address
                 if (inviter) {
@@ -126,6 +131,31 @@ const Home = ({
         <HeaderFooter activeIndex={1}>
         <ToastContainer />
         <main>
+            <div className={cx(styles.invite_mask , { hide: showInviteList})} onClick={()=>setShowInviteList(true)}>
+                <div className={styles.invite_inviter}  onClick={(e)=>{
+                    e.stopPropagation()
+                    }}>
+                    <h1>Invite List</h1>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Address</th>
+                            <th>Number</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            inviteList.map((el, index) => (
+                                <tr key={index}>
+                                    <td>{formatAddress(el.account)}</td>
+                                    <td>{el.count}</td>
+                                </tr>
+                            ))
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div className={styles.container}>
                 <div className={styles.mask}>
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAAB+CAYAAADiI6WIAAAACXBIWXMAABYlAAAWJQFJUiTwAAADfElEQVR4nO3d61EbMRSG4e+kAdIBdBA6gA5CB0k6oARKoASnA9MBqSCkA0qACpTZQR4cB/BtJR3pvM+MZzLDH2XflXzblSXpRlLiEevxSQiJ8EERPijCB0X4oAgfFOGDInxQhA+K8EERPijCB0X4oAgfFOGDInxQhA+K8EERPijCB0X4oAgfFOGDMkln+bHuMv/7Mv/tNPqBGo2llLb+l8xsin8u6SqfDJwIndsp/CYzm06C7/lE4CTo0EHh15nZFP9a0kXsQ9mXo8Ov5FVgOgG+hTqCnZot/IqZXeYbMVkBHJs9/IqZTa8BbiWdjHO4xlEsvF7if5a0kPQ13qH1regHOCmlp5TS9OLvh6TnAY7XMIrO+HX5xd+St38+VAuv16X/XtIX34dlfFU/q5+W/vzJ35+gx9uN6l/SrMW/83tYxld1qd9kZgs+8Gmj6deyKaXpvf7PlmOIqvn38cRvw8WFGMSvz80VOMSvy9WlV8Svx901d8Svw+XFlsQvz+1VtsQvy/Xl1cQvx/119cQvo4sbKog/v27upCH+vLq6hYr48+nu3jniz6PLmyaJf7xu75Yl/nG6vk2a+Ifr/v544h9miI0RiL+/YXbEIP5+htoKhfi7G24PHOLvZsjNj4i/3bC7XhH/Y0Nvd0b89w2/zx3x3xZig0Pi/y/MzpbE/1eoLU2J/yrcXrbEfxFyE2PiB969Onr80NuWR44ffr/6qPHDh1fQ+ITPosUn/JpI8Qm/IUp8wr8hQnzCv2P0+IT/wMjxCb/FqPEJv4MR4xN+R6PFJ/weRopP+D2NEp/wBxghPuEP1Ht8wh+h5/iEP1Kv8Qk/gx7jE34mvcUn/Ix6ik/4mfUSn/AF9BCf8IV4j0/4gjzHb/pLk1GY2dLbb+gTvgKPv6LNUl+Bx1/RZsZXlGf+g6TT1mNhxleUZ/6VpOfWYyF8ZSmlacZftx4HS30jrV/pE76R/Hz/KOmkxQhY6hvJz/fNlnxmfGNmNr2/v6g9CmZ8ezctRkD4xlJK04y/qz0KlnoHzOxc0u+aI2HGO5Df2/+qORLC+3FbcyQs9Y6Y2WOtz/GZ8b4sa42G8L4sao2Gpd6ZWss9M96f+xojIrw/VZ7nCe/PQ40R8RzvkJk9lf66lhnvU/FZT3ifir/AI3xQhPeJGY8yCB8U4YPifbxDZnYmabrFugxJfwFEfusKcp/RWAAAAABJRU5ErkJggg==" className={styles.one}></img>
@@ -168,6 +198,47 @@ const Home = ({
                 <div className={styles.main}>
                     <div className={styles.invite}>
                         <div className={styles.invite_titles}></div>
+                        <div className={styles.invite_rule}>
+                            <p>1. Each time a user invites a friend to participate in the subscription, he can get a 10% bonus, and the bonus is capped at 100%.</p>
+                            <p>2. The top 50 account addresses that invite the most valid users will receive the first NFT airdrop on the platform, and the NFT will be able to be used as a whitelist for the next ecosystem project.</p>
+                            <div className={styles.invite_rule_table}>
+                                <div className={styles.invite_weight}>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>referrals</td>
+                                                <td>1</td>
+                                                <td>2</td>
+                                                <td>3</td>
+                                                <td>4</td>
+                                                <td>5</td>
+                                                <td>6</td>
+                                                <td>7</td>
+                                                <td>8</td>
+                                                <td>9</td>
+                                                <td><span>10</span><span className={styles.red}>cap</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>weighted%</td>
+                                                <td className={styles.red}>10%</td>
+                                                <td className={styles.red}>20%</td>
+                                                <td className={styles.red}>30%</td>
+                                                <td className={styles.red}>40%</td>
+                                                <td className={styles.red}>50%</td>
+                                                <td className={styles.red}>60%</td>
+                                                <td className={styles.red}>70%</td>
+                                                <td className={styles.red}>80%</td>
+                                                <td className={styles.red}>90%</td>
+                                                <td className={styles.red}>100%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className={styles.invite_tip}>
+                                    <b>Formula:</b> The number of tokens obtained by the user = the total subscription amount in this round x ∑ (user subscription amount x (100 + referral weighted percentage)) / actual total subscription amount;
+                                </div>
+                            </div>
+                        </div>
                         <div className={styles.invite_content}>
                             <div className={styles.invite_left}>
                                 <div className={styles.invite_link}>
@@ -201,6 +272,12 @@ const Home = ({
                                                             <span>Download QR</span>
                                                         </button>
                                                     </li>
+                                                    <li>
+                                                        <button  onClick={()=>setShowInviteList(false)} className={styles.invite_lists}>
+                                                            <i></i>
+                                                            <span>My Invite</span>
+                                                        </button>
+                                                    </li>
                                                 </ul>
                                             </div>
                                     </> : <button onClick={()=>checkWallet()} className={styles.create_link}>Connect Wallet And Create Link</button>}
@@ -222,8 +299,8 @@ const Home = ({
                                         {
                                             inviteRank.map((el,index)=>(
                                                 <tr key={index}>
-                                                    <td>{el.invite && formatAddress(el.invite)}</td>
-                                                    <td>{el.count}</td>
+                                                    <td>{formatAddress(el.account)}</td>
+                                                    <td>{el.total}</td>
                                                 </tr>
                                             ))
                                         }
