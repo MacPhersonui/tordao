@@ -1573,7 +1573,7 @@
     color: #fff;
     position: relative;
     z-index: 999;
-
+    height: 1300px;
     .invite_titles {
       background: url(../public/img/invite_title.png) center bottom / auto 100% no-repeat;
       height: 80px;
@@ -1692,8 +1692,8 @@
           .invite_qr {
             margin: 15px 0;
             canvas{
-              width: 110px !important;
-              height: 110px !important;
+              width: 100px !important;
+              height: 100px !important;
             }
             .invite_btns {
               float: right;

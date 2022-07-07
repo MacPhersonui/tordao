@@ -63,7 +63,6 @@ export async function invite(req, res) {
     }
   })
 
-  console.log(rows)
 
   const inviteRank = JSON.parse(JSON.stringify(rows))
   for (var i = 0; i < inviteRank.length; i++) {
@@ -182,6 +181,28 @@ export async function createInvite(req, res) {
         }
       })
     }
+      const inviterData = await INVITE.findAll({
+        attributes: [
+          "invite"
+        ],
+        where: {
+          account: invite
+        }
+      })
+      let inviterArr = []
+      for (var i = 0; i < inviterData.length; i++) {
+        inviterArr.push(inviterData[i].invite)
+      }
+      console.log("inviterArr", inviterArr)
+      await INVITETOTAL.increment({
+        total: 1
+      }, {
+        where: {
+          account: {
+            [Op.in]: inviterArr
+          }
+        }
+      })
   }
 
   if (result) {
