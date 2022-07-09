@@ -131,17 +131,19 @@ export async function createInvite(req, res) {
     })
     return
   }
-  if (!account || !invite){
+  if (!account){
       res.send({
         msg: "Error"
       })
       return
   }
+  if (!invite ){
+    invite = "0x0000000000000000000000000000000000000000"
+  }
   const ga = !!req.cookies._ga ? req.cookies._ga : ""
   const alreadyHave = await INVITE.count({
     where:{
-      account: account,
-      invite: invite
+      account: account
     }
   })
 

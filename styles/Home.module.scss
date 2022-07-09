@@ -166,13 +166,13 @@
 
       .docs {
         margin-left: 25px;
-        background: url(../public/img/docs_btn.png) 100% no-repeat;
+        background: url(../public/img/docs_btn.png) center/100% no-repeat;
         width: 160px;
         height: 50px;
         background-size: cover;
 
         &:hover {
-          background: url(../public/img/docs_btn_hover.png) 100% no-repeat;
+          background: url(../public/img/docs_btn_hover.png) center/100% no-repeat;
           width: 160px;
           height: 50px;
           background-size: cover;
@@ -1049,13 +1049,13 @@
 
         .docs {
           margin-left: 25px;
-          background: url(../public/img/docs_btn.png) 100% no-repeat;
+          background: url(../public/img/docs_btn.png) center/100% no-repeat;
           width: 160px;
           height: 50px;
           background-size: cover;
 
           &:hover {
-            background: url(../public/img/docs_btn_hover.png) 100% no-repeat;
+            background: url(../public/img/docs_btn_hover.png) center/100% no-repeat;
             width: 160px;
             height: 50px;
             background-size: cover;
@@ -1778,7 +1778,7 @@
             overflow: hidden;
             width: 120%;
             margin-left: -10%;
-            margin-top: -15px;
+            margin-top: -25px;
             transform: scale(0.8);
           }
 

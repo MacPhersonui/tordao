@@ -128,7 +128,7 @@ const Home = () => {
                 </ul>
                 <div className={styles.plant_btn}>
                   <Link href="/invite"><div className={styles.community}></div></Link>
-                  <div className={styles.docs}></div>
+                  <div onClick={()=>window.open("https://docs.tordao.io")} className={styles.docs}></div>
                 </div>
 
               </div>
