@@ -59,7 +59,8 @@ export async function invite(req, res) {
 
   const rows = await INVITE.findAll({
     where : {
-      invite: account
+      invite: account,
+      state: 1
     }
   })
 
@@ -69,6 +70,7 @@ export async function invite(req, res) {
     const count = await INVITE.count({
       where : {
         invite: inviteRank[i].account,
+        state: 1,
         ga: {
           [Op.not]: ""
         }
@@ -143,7 +145,8 @@ export async function createInvite(req, res) {
   const ga = !!req.cookies._ga ? req.cookies._ga : ""
   const alreadyHave = await INVITE.count({
     where:{
-      account: account
+      account: account,
+      state: 1
     }
   })
 
@@ -163,7 +166,8 @@ export async function createInvite(req, res) {
 
   const alreadyHave2 = await INVITETOTAL.count({
     where: {
-      account: invite
+      account: invite,
+      state: 1,
     }
   })
 
@@ -179,7 +183,8 @@ export async function createInvite(req, res) {
         total: 1
       }, {
         where: {
-          account: invite
+          account: invite,
+          state: 1,
         }
       })
     }
@@ -188,7 +193,8 @@ export async function createInvite(req, res) {
           "invite"
         ],
         where: {
-          account: invite
+          account: invite,
+          state: 1,
         }
       })
       let inviterArr = []
@@ -200,6 +206,7 @@ export async function createInvite(req, res) {
         total: 1
       }, {
         where: {
+          state: 1,
           account: {
             [Op.in]: inviterArr
           }
