@@ -3,6 +3,7 @@ import fs from "fs"
 import Web3 from "web3"
 import Sequelize from 'sequelize';
 import e from "express";
+import { isFullSolcOutput } from "@openzeppelin/hardhat-upgrades/dist/utils/is-full-solc-output.js";
 const Op = db.Op
 const INVITE = db.INVITE
 const INVITETOTAL = db.INVITETOTAL
@@ -223,4 +224,93 @@ export async function createInvite(req, res) {
       msg: "Fail"
     })
   }
+}
+
+export async function tree(req, res) {
+  const { account } = req.params;
+  if (!account) {
+    res.send({})
+    return
+  }
+  console.log(account)
+  let total = 0
+  let rows = await INVITE.findAll({
+    where: {
+      invite: account,
+      state: 1
+    }
+  })
+  total += rows.length
+  rows = JSON.parse(JSON.stringify(rows))
+  for (var i = 0; i < rows.length; i++) {
+    let data = await INVITE.findAll({
+      where: {
+        invite: rows[i].account,
+        state: 1
+      }
+    })
+    rows[i].children = JSON.parse(JSON.stringify(data))
+    rows[i].count = rows[i].children.length
+    total += rows[i].count
+    for (var j = 0; j < rows[i].children.length; j++) {
+      let data = await INVITE.findAll({
+        where: {
+          invite: rows[i].children[j].account,
+          state: 1
+        }
+      })
+      rows[i].children[j].children = JSON.parse(JSON.stringify(data))
+      rows[i].children[j].count = rows[i].children[j].children.length
+      total += rows[i].children[j].count
+      for (var k = 0; k < rows[i].children[j].children.length; k++){
+        let data = await INVITE.findAll({
+          where: {
+            invite: rows[i].children[j].children[k].account,
+            state: 1
+          }
+        })
+        rows[i].children[j].children[k].children = JSON.parse(JSON.stringify(data))
+        rows[i].children[j].children[k].count = rows[i].children[j].children[k].children.length
+        total += rows[i].children[j].children[k].count
+        for (var l = 0; l < rows[i].children[j].children[k].children.length; l++) {
+          let data = await INVITE.findAll({
+            where: {
+              invite: rows[i].children[j].children[k].children[l].account,
+              state: 1
+            }
+          })
+          rows[i].children[j].children[k].children[l].children = JSON.parse(JSON.stringify(data))
+          rows[i].children[j].children[k].children[l].count = rows[i].children[j].children[k].children[l].children.length
+          total += rows[i].children[j].children[k].children[l].count
+          for (var m = 0; m < rows[i].children[j].children[k].children[l].children.length; m++) {
+            let data = await INVITE.findAll({
+              where: {
+                invite: rows[i].children[j].children[k].children[l].children[m].account,
+                state: 1
+              }
+            })
+            rows[i].children[j].children[k].children[l].children[m].children = JSON.parse(JSON.stringify(data))
+            rows[i].children[j].children[k].children[l].children[m].count = rows[i].children[j].children[k].children[l].children[m].children.length
+            total += rows[i].children[j].children[k].children[l].children[m].count
+            for (var n = 0; n < rows[i].children[j].children[k].children[l].children[m].children.length; n++) {
+              let data = await INVITE.findAll({
+                where: {
+                  invite: rows[i].children[j].children[k].children[l].children[m].children[n].account,
+                  state: 1
+                }
+              })
+              rows[i].children[j].children[k].children[l].children[m].children[n].children = JSON.parse(JSON.stringify(data))
+              rows[i].children[j].children[k].children[l].children[m].children[n].count = rows[i].children[j].children[k].children[l].children[m].children[n].children.length
+              total += rows[i].children[j].children[k].children[l].children[m].children[n].count
+            }
+          }
+        }
+      }
+    }
+  }
+  res.send({
+    account: account,
+    count: total,
+    children: rows
+  })
 }

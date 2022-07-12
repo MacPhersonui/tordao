@@ -3,12 +3,23 @@ import Wallet from '../components/wallet'
 import Link from 'next/link'
 import classNames from "classnames/bind"
 import styles from "../styles/Home.module.scss"
+import {
+    useRouter
+} from 'next/router'
+import {
+    useTranslation,
+    Trans
+} from 'next-i18next'
 const cx = classNames.bind(styles)
 
-const Header = (props, t) => {
+const Header = (props) => {
     const { activeIndex } = props
     const [showMobileNav, setShowMobileNav] = useState(false)
 
+    const router = useRouter()
+    const {
+        t
+    } = useTranslation('common')
     useEffect(async () => {
         initNetWork()
     }, [])
@@ -43,28 +54,38 @@ const Header = (props, t) => {
             <nav className={styles.navbar}>
                 <div className={styles.menu_text_box}>
                     <div className={styles.left_text}>
-                        <Link href="/">HOME</Link>
-                        <Link href="/invite">IINVITE</Link>
+                        <Link href="/">{t('home')}</Link>
+                        <Link href="/invite">{t('invite')}</Link>
                     </div>
                     <div className={styles.right_text}>
                         <a>IDO</a>
-                        <a>BUY TOR</a>
+                        <a>{t('buytor')}</a>
                     </div>
                 </div>
             </nav>
             <nav className={cx(styles.mobile_nav, { hide: showMobileNav })} onClick={() => setShowMobileNav(false)}>
                 <ul onClick={(e) => { e.stopPropagation() }}>
-                    <li><Link href="/">HOME</Link></li>
-                    <li><Link href="/invite">INVITE</Link></li>
+                    <li><Link href="/">{t('home')}</Link></li>
+                    <li><Link href="/invite">{t('invite')}</Link></li>
                     <li>IDO</li>
-                    <li>BUY TOR</li>
+                    <li>{t('buytor')}</li>
                 </ul>
             </nav>
-            <div className={styles.wallet}><Wallet /></div>
+            
+            <div className={styles.wallet}>
+                <Wallet />
+            </div>
+            <div className={styles.locale}>
+                <Link
+                href='#'
+                locale={router.locale === 'en' ? 'zh' : 'en'}
+                >
+                {router.locale === 'en' ?"English": "中文"}
+                </Link>
+            </div>
             {props.children}
         </header>
     )
 }
-
 
 export default Header

@@ -12,7 +12,16 @@ import tokenConfig from "../contract.config"
 import { confirmAlert } from "react-confirm-alert"
 import HeaderFooter from "../layout/HeaderFooter"
 import Link from 'next/link'
-
+import {
+  useTranslation,
+  Trans
+} from 'next-i18next'
+import {
+  serverSideTranslations
+} from 'next-i18next/serverSideTranslations'
+import {
+  useRouter
+} from 'next/router'
 const cx = classNames.bind(styles)
 
 
@@ -29,7 +38,10 @@ const Home = () => {
   // const { nft } = tokenConfig
   // const nftContract = new web3.eth.Contract(nft.abi, nft.address)
 
-
+  const router = useRouter()
+  const {
+    t
+  } = useTranslation('common')
 
   useEffect(async () => {
     const timer = setInterval(async () => {
@@ -39,39 +51,11 @@ const Home = () => {
     return () => {
       clearInterval(timer)
     }
-
   })
-
-  
 
   return (
     <HeaderFooter activeIndex={1}>
       <main>
-        <Head>
-          <title>TorDao</title>
-          <meta itemProp="image" content="/logo.png" />
-          <meta charSet="utf-8" />
-          <meta name="renderer" content="webkit" />
-          <meta name="author" content="TorDao" />
-          <meta name="generator" content="TorDao" />
-          <meta name="copyright" content="TorDao" />
-          {/* <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-          <meta httpEquiv="Cache-Control" content="no-transform" />
-          <meta httpEquiv="Cache-Control" content="no-siteapp" /> */}
-          <link rel="shortcut icon" href="/favicon.ico" />
-          <link rel="bookmark" href="/favicon.ico" />
-          <meta name="description" content="TorDao" />
-          <meta name="keywords" content="TorDao" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: ``,
-            }}
-          />
-        </Head>
-
-      
-
         <div className={styles.container}>
           <div className={styles.mask}>
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAAB+CAYAAADiI6WIAAAACXBIWXMAABYlAAAWJQFJUiTwAAADfElEQVR4nO3d61EbMRSG4e+kAdIBdBA6gA5CB0k6oARKoASnA9MBqSCkA0qACpTZQR4cB/BtJR3pvM+MZzLDH2XflXzblSXpRlLiEevxSQiJ8EERPijCB0X4oAgfFOGDInxQhA+K8EERPijCB0X4oAgfFOGDInxQhA+K8EERPijCB0X4oAgfFOGDMkln+bHuMv/7Mv/tNPqBGo2llLb+l8xsin8u6SqfDJwIndsp/CYzm06C7/lE4CTo0EHh15nZFP9a0kXsQ9mXo8Ov5FVgOgG+hTqCnZot/IqZXeYbMVkBHJs9/IqZTa8BbiWdjHO4xlEsvF7if5a0kPQ13qH1regHOCmlp5TS9OLvh6TnAY7XMIrO+HX5xd+St38+VAuv16X/XtIX34dlfFU/q5+W/vzJ35+gx9uN6l/SrMW/83tYxld1qd9kZgs+8Gmj6deyKaXpvf7PlmOIqvn38cRvw8WFGMSvz80VOMSvy9WlV8Svx901d8Svw+XFlsQvz+1VtsQvy/Xl1cQvx/119cQvo4sbKog/v27upCH+vLq6hYr48+nu3jniz6PLmyaJf7xu75Yl/nG6vk2a+Ifr/v544h9miI0RiL+/YXbEIP5+htoKhfi7G24PHOLvZsjNj4i/3bC7XhH/Y0Nvd0b89w2/zx3x3xZig0Pi/y/MzpbE/1eoLU2J/yrcXrbEfxFyE2PiB969Onr80NuWR44ffr/6qPHDh1fQ+ITPosUn/JpI8Qm/IUp8wr8hQnzCv2P0+IT/wMjxCb/FqPEJv4MR4xN+R6PFJ/weRopP+D2NEp/wBxghPuEP1Ht8wh+h5/iEP1Kv8Qk/gx7jE34mvcUn/Ix6ik/4mfUSn/AF9BCf8IV4j0/4gjzHb/pLk1GY2dLbb+gTvgKPv6LNUl+Bx1/RZsZXlGf+g6TT1mNhxleUZ/6VpOfWYyF8ZSmlacZftx4HS30jrV/pE76R/Hz/KOmkxQhY6hvJz/fNlnxmfGNmNr2/v6g9CmZ8ezctRkD4xlJK04y/qz0KlnoHzOxc0u+aI2HGO5Df2/+qORLC+3FbcyQs9Y6Y2WOtz/GZ8b4sa42G8L4sao2Gpd6ZWss9M96f+xojIrw/VZ7nCe/PQ40R8RzvkJk9lf66lhnvU/FZT3ifir/AI3xQhPeJGY8yCB8U4YPifbxDZnYmabrFugxJfwFEfusKcp/RWAAAAABJRU5ErkJggg==" className={styles.one}></img>
@@ -88,33 +72,38 @@ const Home = () => {
                 <img src="/img/effects_left/effects_3.png" className={styles.effects_4}></img>
                 <img src="/img/effects_left/effects_5.png" className={styles.effects_5}></img>
                 <img src="/img/effects_left/effects_6.png" className={styles.effects_6}></img>
-                <img src="/img/effects_left/effects_7.png"className={styles.effects_7}></img>
-                <img src="/img/effects_left/effects_8.png"className={styles.effects_8}></img>
+                <img src="/img/effects_left/effects_7.png" className={styles.effects_7}></img>
+                <img src="/img/effects_left/effects_8.png" className={styles.effects_8}></img>
                 <img src="/img/effects_left/effects_9.png" className={styles.effects_9}></img>
               </div>
             </div>
             <div className={styles.right}>
-              <div id="bgItemsContainer-right">            <img src="/img/effects_left/effects_1.png" className={styles.effects_1}></img>
+              <div id="bgItemsContainer-right">
+                <img src="/img/effects_left/effects_1.png" className={styles.effects_1}></img>
                 <img src="/img/effects_left/effects_2.png" className={styles.effects_2}></img>
                 <img src="/img/effects_left/effects_3.png" className={styles.effects_3}></img>
                 <img src="/img/effects_left/effects_3.png" className={styles.effects_4}></img>
                 <img src="/img/effects_left/effects_5.png" className={styles.effects_5}></img>
-                <img src="/img/effects_left/effects_6.png" className={styles.effects_6}></img><img
-                  src="/img/effects_left/effects_7.png"
-                  className={styles.effects_7}></img><img
-                    src="/img/effects_left/effects_8.png"
-                    className={styles.effects_8}></img><img
-                      src="/img/effects_left/effects_9.png"
-                      className={styles.effects_9}></img>
+                <img src="/img/effects_left/effects_6.png" className={styles.effects_6}></img>
+                <img src="/img/effects_left/effects_7.png" className={styles.effects_7}></img>
+                <img
+                  src="/img/effects_left/effects_8.png"
+                  className={styles.effects_8}></img><img
+                    src="/img/effects_left/effects_9.png"
+                    className={styles.effects_9}></img>
               </div>
             </div>
           </div>
-          
+
           <div className={styles.main}>
             <div className={styles.body}>
               <div className={styles.plant_1}>
-                <div className={styles.title}></div>
-                <p className={styles.solgen}>Committed to becoming a traffic portal in the Web3.0 Era.</p>
+                <div className={styles.title}>
+                    {
+                      t('hello')
+                    }
+                </div>
+                <p className={styles.solgen}>{t("title")}</p>
                 <ul className={styles.tor_box}>
                   <li className={styles.st}>
                     <div className={styles.title}>Total Supply</div>
@@ -127,48 +116,43 @@ const Home = () => {
                   </li>
                 </ul>
                 <div className={styles.plant_btn}>
-                  <Link href="/invite"><div className={styles.community}></div></Link>
-                  <div onClick={()=>window.open("https://docs.tordao.io")} className={styles.docs}></div>
+                  <Link href="/invite">
+                    <div className={styles.community}>{t('invite')}</div>
+                  </Link>
+                  <div onClick={() => window.open("https://docs.tordao.io")} className={styles.community}>
+                    {t('docs')}
+                  </div>
                 </div>
 
               </div>
               <div className={styles.plant_2}>
                 <div className={styles.plant_2_inner}>
                   <div className={styles.plant_2_text}>
-                    The Onion Router DAO is a decentralized autonomous 
-                    organization that aims to create a comprehensive platform
-                    integrating DEX, Defi, NFT, DAO and other industry trends 
-                    by collaborating with like-minded people around the world 
-                    to become the traffic portal in the WEB3.0 era. The overall 
-                    architecture of &quot;The Onion Router DAO&quot; is based on 
-                    &quot;The Onion Router&quot; platform for construction and governance. 
-                    TOR is the only governance and rights token of the platform. 
-                    TOR holders will have the priority to participate in all sectors 
-                    of the platform.
+                    {t('plant2')}
                   </div>
                 </div>
               </div>
-              <div className={styles.plant_3}>
+              <div className={cx(styles.plant_3 , { zh: router.locale === 'zh'})}>
               </div>
               <div className={styles.plant_4}>
                 <div className={styles.plant_4_title}></div>
                 <ul>
                   <li>
-                    <h1>Second quarter of 2022</h1>
-                    <p>Complete Onion DAO basic framework building based on Onion platform</p>
-                    <p>Complete TOR token IDO</p>
+                    <h1>{t('roadmap1_title')}</h1>
+                    <p>{t('roadmap1_text1')}</p>
+                    <p>{t('roadmap1_text2')}</p>
                   </li>
                   <li>
-                    <h1>The third quarter of 2022</h1>
-                    <p>Launch the Onion &apos;s first NFT and further improve the Onion DAO ecosystem</p>
+                    <h1>{t('roadmap2_title')}</h1>
+                    <p>{t('roadmap2_text1')}</p>
                   </li>
                   <li>
-                    <h1>The fourth quarter of 2022</h1>
-                    <p>Layout blockchain games / metaverse ecology</p>
+                    <h1>{t('roadmap3_title')}</h1>
+                    <p>{t('roadmap3_text1')}</p>
                   </li>
                   <li>
-                    <h1>The first quarter of 2023</h1>
-                    <p>Set the DAO autonomous node and gradually open the permission to make Onion DAO become a real decentralized anonymous DAO</p>
+                    <h1>{t('roadmap4_title')}</h1>
+                    <p>{t('roadmap4_text1')}</p>
                   </li>
                 </ul>
               </div>
@@ -185,5 +169,13 @@ const Home = () => {
     </HeaderFooter>
   )
 }
+
+export const getStaticProps = async ({
+  locale
+}) => ({
+  props: {
+    ...await serverSideTranslations(locale, ['common']),
+  },
+})
 
 export default Home

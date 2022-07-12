@@ -1,5 +1,6 @@
 import '../styles/globals.scss'
 import { UseWalletProvider } from 'use-wallet'
+import { appWithTranslation } from 'next-i18next'
 
 function MyApp({ Component, pageProps }) {
   return <UseWalletProvider
@@ -14,4 +15,4 @@ function MyApp({ Component, pageProps }) {
   </UseWalletProvider>
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

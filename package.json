@@ -29,6 +29,7 @@
     "cookie-parser": "^1.4.6",
     "ethers": "^5.5.4",
     "express": "^4.17.3",
+    "fs": "^0.0.1-security",
     "hardhat": "^2.8.4",
     "hardhat-abi-exporter": "^2.8.0",
     "hardhat-log-remover": "^2.0.2",

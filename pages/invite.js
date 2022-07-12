@@ -28,7 +28,13 @@ import 'react-toastify/dist/ReactToastify.css'
 import {
     withRouter
 } from "next/router"
-
+import {
+    useTranslation,
+    Trans
+} from 'next-i18next'
+import {
+    serverSideTranslations
+} from 'next-i18next/serverSideTranslations'
 const cx = classNames.bind(styles)
 
 const toastConfig = {
@@ -44,6 +50,10 @@ const toastConfig = {
 const Home = ({
         router
     }) => {
+
+    const {
+        t
+    } = useTranslation('common')
 
     const wallet = useWallet()
     const {
@@ -73,7 +83,11 @@ const Home = ({
                 console.log("router", router)
                 const inviter = router.query.address
                 if (inviter) {
-                    await createInvite(account, inviter)
+                    const inviteData = await createInvite(account, inviter)
+                    console.log(inviteData)
+                    if (inviteData.msg == "Success"){
+                        toast.dark('🚀 Invited success!', toastConfig)
+                    }
                 }
             }
         }, 3000)
@@ -135,7 +149,7 @@ const Home = ({
                 <div className={styles.invite_inviter}  onClick={(e)=>{
                     e.stopPropagation()
                     }}>
-                    <h1>Invite List</h1>
+                    <h1>{t('invite_text10')}</h1>
                     <table>
                         <thead>
                         <tr>
@@ -199,14 +213,14 @@ const Home = ({
                     <div className={styles.invite}>
                         <div className={styles.invite_titles}></div>
                         <div className={styles.invite_rule}>
-                            <p>1. Each time a user invites a friend to participate in the subscription, he can get a 10% bonus, and the bonus is capped at 100%.</p>
-                            <p>2. The top 50 account addresses that invite the most valid users will receive the first NFT airdrop on the platform, and the NFT will be able to be used as a whitelist for the next ecosystem project.</p>
+                            <p>{t('invite_rule1')}</p>
+                            <p>{t('invite_rule2')}</p>
                             <div className={styles.invite_rule_table}>
                                 <div className={styles.invite_weight}>
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td>referrals</td>
+                                                <td>{t('invite_table1')}</td>
                                                 <td>1</td>
                                                 <td>2</td>
                                                 <td>3</td>
@@ -219,7 +233,7 @@ const Home = ({
                                                 <td><span>10</span><span className={styles.red}>cap</span></td>
                                             </tr>
                                             <tr>
-                                                <td>weighted%</td>
+                                                <td>{t('invite_table2')}</td>
                                                 <td className={styles.red}>10%</td>
                                                 <td className={styles.red}>20%</td>
                                                 <td className={styles.red}>30%</td>
@@ -235,7 +249,7 @@ const Home = ({
                                     </table>
                                 </div>
                                 <div className={styles.invite_tip}>
-                                    <b>Formula:</b> The number of tokens obtained by the user = the total subscription amount in this round x ∑ (user subscription amount x (100 + referral weighted percentage)) / actual total subscription amount;
+                                    <b>{t('invite_table3')}:</b> {t('invite_table4')}
                                 </div>
                             </div>
                         </div>
@@ -243,16 +257,19 @@ const Home = ({
                             <div className={styles.invite_left}>
                                 <div className={styles.invite_link}>
                                     <span className={styles.invite_text}>
-                                        <p>Total number of</p>
-                                        <p>people invited link</p>
+                                        <p>{t('invite_text1')}</p>
+                                        <p>{t('invite_text2')}</p>
                                     </span>
                                     <span className={styles.invite_number}>
                                         <b>{inviteNum}</b>
-                                        <i>persons</i>
+                                        <i>{t('invite_text3')}</i>
                                     </span>
                                 </div>
                                 <div className={styles.invite_qrcode}>
-                                    <div className={styles.invite_title}>Invitation Link</div>
+                                    <div className={styles.invite_title}>{t('invite_text4')}</div>
+                                    <div className={styles.invite_title2}>
+                                        {t('invite_text11')}: <b>{router.query.address? formatAddress(router?.query?.address):""}</b>
+                                    </div>
                                     {account ? <>
                                         <div className={styles.invite_address}>https://tordao.io/invite?address={account}</div>
                                             <div className={styles.invite_qr}>
@@ -263,30 +280,30 @@ const Home = ({
                                                             copyLink()
                                                         }} className={styles.copy_link} data-clipboard-text={`https://tordao.io/invite?address=${account}`}>
                                                             <i></i>
-                                                            <span>Copy Link</span>
+                                                            <span>{t('invite_text5')}</span>
                                                         </Clipboard>
                                                     </li>
                                                     <li>
                                                         <button onClick={()=>downloadQR()} className={styles.download_qr}>
                                                             <i></i>
-                                                            <span>Download QR</span>
+                                                            <span>{t('invite_text6')}</span>
                                                         </button>
                                                     </li>
                                                     <li>
                                                         <button  onClick={()=>setShowInviteList(false)} className={styles.invite_lists}>
                                                             <i></i>
-                                                            <span>My Invite</span>
+                                                            <span>{t('invite_text7')}</span>
                                                         </button>
                                                     </li>
                                                 </ul>
                                             </div>
-                                    </> : <button onClick={()=>checkWallet()} className={styles.create_link}>Connect Wallet And Create Link</button>}
+                                    </> : <button onClick={()=>checkWallet()} className={styles.create_link}>{t('invite_text8')}</button>}
                                     
                                 </div>
                             </div>
                             <div className={styles.invite_right}>
                                 <div className={styles.invite_rank}>
-                                    <div className={styles.invite_title}>Share Rank</div>
+                                    <div className={styles.invite_title}>{t('invite_text9')}</div>
                                     <div className={styles.invite_table}>
                                     <table>
                                         <thead>
@@ -317,5 +334,13 @@ const Home = ({
         </HeaderFooter>
     )
 }
+
+export const getStaticProps = async ({
+    locale
+}) => ({
+    props: {
+        ...await serverSideTranslations(locale, ['common']),
+    },
+})
 
 export default withRouter(Home)
