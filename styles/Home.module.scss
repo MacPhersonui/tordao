@@ -24,7 +24,7 @@
   width: 100%;
   height: 100%;
   position: relative;
-  z-index: 999;
+  z-index: 1200;
 }
 
 .mask {
@@ -75,7 +75,7 @@
 }
 .navbar {
   position: fixed;
-  z-index: 1000;
+  z-index: 2000;
   top: -39.4px;
   left: 50%;
   transform: translateX(-50%);
@@ -902,6 +902,182 @@
   }
 }
 
+.ido {
+  .title{
+
+  }
+  .content{
+    width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    .round{
+      display: inline-block;
+      li{
+        background: url(../public/img/btn_round.png) no-repeat center / auto 41.5%;
+        width: 250px;
+        height: 110px;
+        color: #FF0034;
+        font-family: NetflixSans;
+        font-size: 16px;
+        text-align: center;
+        line-height: 110px;
+        display: inline-block;
+        &.active{
+          background: url(../public/img/btn_round_active.png) no-repeat center / auto 100%;
+          color: #fff;
+        }
+      }
+    }
+    .line{
+      background: url(../public/img/round1_line.png) no-repeat center / 64% auto;
+      height: 50px;
+      margin-top: -20px;
+      &.line1{
+        background-image: url(../public/img/round1_line.png);
+      }
+      &.line2{
+        background-image: url(../public/img/round2_line.png);
+      }
+      &.line3{
+        background-image: url(../public/img/round3_line.png);
+      }
+    }
+    .box{
+      width: 900px;
+      margin: 0 auto;
+      .box_title{
+        color: #fff;
+        background: #fd4635;
+        font-family: NetflixSans;
+        font-size: 16px;
+        overflow: hidden;
+        padding: 12px 20px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        .fl {
+          float: left;
+        }
+        .fr{
+          float: right;
+        }
+      }
+      .box_content{
+        background: #3e38382e;
+        height: 150px;
+        ul{
+          li{
+            display: inline-block;
+            font-family: NetflixSans;
+            margin: 40px 0;
+            line-height: 25px;
+            width: 33.3%;
+            padding: 0 30px;
+            white-space: nowrap;
+            border-right: 1px solid #ffffff2b;
+            &:last-child{
+              border: none;
+            }
+            h1{
+              font-size: 12px;
+              color: #fd4635;
+              line-height: 30px;
+            }
+            p{
+              color: #fff;
+              font-size: 24px;
+              b{
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .rate{
+      padding: 30px 0;
+      overflow: hidden;
+      .rate_outer{
+        border: 1px solid #fb4433;
+        border-radius: 6px;
+        width: 90%;
+        overflow: hidden;
+        float: left;
+        .rate_inner{
+          border-radius: 6px;
+          border: 1.5px solid #000;
+          background: #fb4433;
+          height: 12px;
+          width: 40%;
+          border-radius: 6px;
+        }
+      }
+      span{
+        float: left;
+        color: #fb4433; 
+        font-family: NetflixSans;
+        font-size: 12px;
+        padding: 0 20px ;
+      }
+    }
+  }
+  .info {
+    width: 900px;
+    margin: 0 auto;
+    li {
+      display: inline-block;
+      font-family: NetflixSans;
+      margin: 40px 0;
+      line-height: 25px;
+      width: 33.3%;
+      padding: 0 30px;
+      white-space: nowrap;
+      border-right: 1px solid #ffffff2b;
+      text-align: center;
+      &:last-child {
+        border: none;
+      }
+
+      h1 {
+        font-size: 12px;
+        color: #fd4635;
+        line-height: 30px;
+      }
+
+      p {
+        color: #fff;
+        font-size: 24px;
+        b {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .input{
+    width: 900px;
+    margin: 0 auto;
+    padding: 30px 0 80px 0;
+    text-align: center;
+    input{
+      background: #191d22;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 15px;
+      color: #fff;
+      width: 300px;
+    }
+    button{
+      background: url(../public/img/home_btn_hover.png) no-repeat center/auto 100%;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      height: 40px;
+      width: 120px;
+      font-size: 14px;
+      margin: 0 20px;
+    }
+  }
+}
+
 @media screen and (max-width: 500px) {
   .main {
     width: 100%;
@@ -970,7 +1146,7 @@
   }
   .navbar {
     position: fixed;
-    z-index: 1000;
+    z-index: 2000;
     top: -39.4px;
     left: 50%;
     transform: translateX(-50%);

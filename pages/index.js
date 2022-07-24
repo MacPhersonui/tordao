@@ -99,9 +99,6 @@ const Home = () => {
             <div className={styles.body}>
               <div className={styles.plant_1}>
                 <div className={styles.title}>
-                    {
-                      t('hello')
-                    }
                 </div>
                 <p className={styles.solgen}>{t("title")}</p>
                 <ul className={styles.tor_box}>

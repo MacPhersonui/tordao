@@ -48,6 +48,11 @@ module.exports = {
             accounts: [mnemonic],
             timeout: 30000,
         },
+        goerli: {
+            url: "https://goerli.infura.io/v3/3970ae72d3db40f6a6dfad8544b4da1c",
+            accounts: [mnemonic],
+            timeout: 20000,
+        },
         rinkeby: {
             url: "https://rinkeby.infura.io/v3/3970ae72d3db40f6a6dfad8544b4da1c",
             accounts: [mnemonic],
@@ -61,14 +66,14 @@ module.exports = {
         bsc: {
             url: "https://data-seed-prebsc-2-s1.binance.org:8545",
             accounts: [mnemonic],
-            timeout: 200000,
+            // timeout: 200000,
         },
         eth: {
             url: "https://mainnet.infura.io/v3/3970ae72d3db40f6a6dfad8544b4da1c",
             accounts: [mnemonic],
         },
         bscmain: {
-            url: "https://bsc-dataseed.binance.org",
+            url: "https://bsc-dataseed4.defibit.io",
             accounts: [mnemonic],
         },
         clv:

@@ -1,6 +1,10 @@
 module.exports = {
-    nft: {
-        address: "0x5B2f9A26C63563266c08e3A13103d5553D29aF18",
-        abi: require("./abi/LunchDaoNFT.json"),
+    ido: {
+        address: "0xbEd78C13aeF5717222e8a1CD224a24d9Ff88b371",
+        abi: require("./abi/IDO.json"),
+    },
+    usdt: {
+        address: "0x6874163ca51863001E94639C3D8940154Fd43d5c",
+        abi: require("./abi/USDT.json"),
     }
 }
