@@ -5,21 +5,21 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-// import "hardhat/console.sol";
+import "hardhat/console.sol";
 
 contract IDO is Ownable {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
     uint256 public decimals = 18;
-    uint256[] public IDO = [200000  * (10 ** decimals), 200000  * (10 ** decimals), 100000  * (10 ** decimals)];
+    uint256[] public IDO = [160000  * (10 ** decimals), 200000  * (10 ** decimals), 140000  * (10 ** decimals)];
     uint256[] public starttime = [0, 0, 0, 0, 0, 0];
     uint256 public approvedQuota = 100 * (10 ** decimals);
     uint256 public maxDeposit = 500 * (10 ** decimals);
     uint256[] public totalInvestment = [0, 0, 0];
     IERC20 public USDT;
     mapping(address => uint256) public investments;
-    bool start = true;
+    bool public start = true;
 
 
     struct Deposit {
@@ -34,7 +34,7 @@ contract IDO is Ownable {
         uint256 withdrawn;
 	}
 
-    mapping (address => User) internal users;
+    mapping (address => User) public users;
 
     constructor(address _usdt, uint256[] memory _starttime) {
         USDT = IERC20(_usdt);
@@ -73,6 +73,10 @@ contract IDO is Ownable {
 
     modifier checkStart() {
         require(start, 'Not start');
+        _;
+    }
+
+    modifier checkStarttime() {
         require(
             block.timestamp >= starttime[0] && block.timestamp < starttime[1] ||
             block.timestamp >= starttime[2] && block.timestamp < starttime[3] ||
@@ -166,62 +170,98 @@ contract IDO is Ownable {
 
     function getLockInvestment(address _account) public view returns(uint256 lockInvestment){
         if(block.timestamp > starttime[1]){
-            uint256 investment = arrSum(users[_account].deposits, starttime[0] , starttime[1]);
+            uint256 investment1 = arrSum(users[_account].deposits, starttime[0] , starttime[1]);
             // console.log("users[_account].deposits.length", users[_account].deposits.length);
             if(IDO[0] >= totalInvestment[0]){
-                lockInvestment = lockInvestment.add(investment);
+                lockInvestment = lockInvestment.add(investment1);
+            }else{
+                lockInvestment = lockInvestment.add(investment1.mul(IDO[0]).div(totalInvestment[0]));
+                // console.log("IDO[0].div(totalInvestment[0])", lockInvestment);
             }
-            lockInvestment = lockInvestment.add(investment * IDO[0] / totalInvestment[0]);
         }
         if(block.timestamp > starttime[3]){
             uint256 investment2 = arrSum(users[_account].deposits, starttime[2] , starttime[3]);
             // console.log("users[_account].deposits.length", users[_account].deposits.length);
             if(IDO[1] >= totalInvestment[1]){
                 lockInvestment = lockInvestment.add(investment2);
+            }else{
+                lockInvestment = lockInvestment.add(investment2.mul(IDO[1]).div(totalInvestment[1]));
+                // console.log("IDO[1].div(totalInvestment[1])", lockInvestment);
             }
-            lockInvestment = lockInvestment.add(investment2 * IDO[1] / totalInvestment[1]);
         }
         if(block.timestamp > starttime[5]){
             uint256 investment3 = arrSum(users[_account].deposits, starttime[4] , starttime[5]);
             // console.log("users[_account].deposits.length", users[_account].deposits.length);
             if(IDO[2] >= totalInvestment[2]){
                 lockInvestment = lockInvestment.add(investment3);
+            }else{
+                lockInvestment = lockInvestment.add(investment3.mul(IDO[2]).div(totalInvestment[2]));
+                // console.log("IDO[2].div(totalInvestment[2])", lockInvestment);
             }
-            lockInvestment = lockInvestment.add(investment3 * IDO[2] / totalInvestment[2]);
         }
         return lockInvestment;
     }
 
     function getRemainingInvestment(address _account) public view returns(uint256 remainingInvestment){
-        uint256 alreayInvestment = arrSum(users[_account].deposits, starttime[0] , starttime[5]);
-        remainingInvestment = alreayInvestment - getLockInvestment(_account);
+        if(block.timestamp <= starttime[1]){
+            return 0;
+        }
+        if(block.timestamp > starttime[1]){
+            remainingInvestment = arrSum(users[_account].deposits, starttime[0] , starttime[1]);
+        }
+        if(block.timestamp > starttime[3]){
+            remainingInvestment = arrSum(users[_account].deposits, starttime[0] , starttime[3]);
+        }
+        if(block.timestamp > starttime[5]){
+            remainingInvestment = arrSum(users[_account].deposits, starttime[0] , starttime[5]);
+        }
+        // console.log("getLockInvestment",getLockInvestment(_account));
+        remainingInvestment = remainingInvestment.sub(getLockInvestment(_account));
         // console.log("getRemainingInvestment",remainingInvestment);
         return remainingInvestment;
     }
 
     function withdrawRemainingInvestment() public checkStart {
         uint256 remainingInvestment = getRemainingInvestment(msg.sender);
-        require(remainingInvestment >= users[msg.sender].withdrawn, "Lack of balance");
+        require(remainingInvestment > 0 && remainingInvestment >= users[msg.sender].withdrawn, "Lack of balance");
         remainingInvestment = remainingInvestment.sub(users[msg.sender].withdrawn);
-        USDT.safeTransferFrom(msg.sender, address(this), remainingInvestment);
+        require(remainingInvestment  <= 3000000000000000000000);
+        USDT.safeTransfer(msg.sender, remainingInvestment);
         users[msg.sender].withdrawn = users[msg.sender].withdrawn.add(remainingInvestment);
     }
 
-    function investment(address _inviter, uint256 _amount) public checkStart{
-        uint256 maxInvestment = maxDeposit.mul(getWeighting(msg.sender)).div(100);
-        uint256 remainingInvestment = getRemainingInvestment(msg.sender);
-        // console.log("maxDeposit", maxInvestment);
+    // function getAvailableInvestment(address _account, uint256 _period) public view returns (uint256 availableInvestment){
+    //     uint256 remainingInvestment = getRemainingInvestment(_account);
+    //     uint256 withdraw = users[_account].withdrawn;
+    //     uint256 alreadyInvestment = 0;
+    //     if(_period == 1){
+    //         alreadyInvestment = arrSum(users[msg.sender].deposits, starttime[2] , starttime[3]);
+    //     }
+    //     if(_period == 2){
+    //         alreadyInvestment = arrSum(users[msg.sender].deposits, starttime[4] , starttime[5]);
+    //     }
+    //     // console.log("getAvailableInvestment", _period, remainingInvestment.add(alreadyInvestment).sub(withdraw));
+    //     return remainingInvestment.add(alreadyInvestment).sub(withdraw);
+    // }
+
+    function investment(address _inviter, uint256 _amount) public checkStart checkStarttime{
         require(_inviter != 0x0000000000000000000000000000000000000000, "Inviter empty");
-        require( _amount > 0 && _amount <= maxInvestment && _amount.add(remainingInvestment) <= maxInvestment, "Exceeds the investment maximum!" );
         require(_inviter != msg.sender, "You can't invite yourself");
         require(users[_inviter].referrer != msg.sender,"Your inviter's inviter can't be you");
+        uint256 maxInvestment = maxDeposit.mul(getWeighting(msg.sender)).div(100);
+        uint256 period = getWhichPeriod();
+        // console.log("maxDeposit", maxInvestment);
+        // console.log("period",period);
+        // console.log("amount", _amount.add(getAvailableInvestment(msg.sender,period)));
+        // require( _amount > 0 && _amount <= maxInvestment && _amount.add(getAvailableInvestment(msg.sender,period)) <= maxInvestment, "Exceeds the investment maximum!" );
+        require( _amount > 0 && _amount <= maxInvestment, "Exceeds the investment maximum!" );
+
         users[_inviter].invitee.push(msg.sender);
         if(users[msg.sender].referrer == 0x0000000000000000000000000000000000000000){
             users[msg.sender].referrer = _inviter;
         }
         USDT.safeTransferFrom(msg.sender, address(this), _amount);
         users[msg.sender].deposits.push(Deposit(_amount, block.timestamp));
-        uint256 period = getWhichPeriod();
         totalInvestment[period] = totalInvestment[period].add(_amount);
     }
 

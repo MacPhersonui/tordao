@@ -904,7 +904,8 @@
 
 .ido {
   .title{
-
+    background: url(../public/img/ido_title.png) no-repeat center / auto 100%;
+    height:100px;
   }
   .content{
     width: 900px;
@@ -949,9 +950,9 @@
         color: #fff;
         background: #fd4635;
         font-family: NetflixSans;
-        font-size: 16px;
+        font-size: 14px;
         overflow: hidden;
-        padding: 12px 20px;
+        padding: 8px 20px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         .fl {
@@ -963,14 +964,13 @@
       }
       .box_content{
         background: #3e38382e;
-        height: 150px;
         ul{
           li{
             display: inline-block;
             font-family: NetflixSans;
-            margin: 40px 0;
+            margin: 35px 0;
             line-height: 25px;
-            width: 33.3%;
+            width: 25%;
             padding: 0 30px;
             white-space: nowrap;
             border-right: 1px solid #ffffff2b;
@@ -978,13 +978,13 @@
               border: none;
             }
             h1{
-              font-size: 12px;
+              font-size: 14px;
               color: #fd4635;
               line-height: 30px;
             }
             p{
               color: #fff;
-              font-size: 24px;
+              font-size: 18px;
               b{
                 font-size: 12px;
               }
@@ -996,12 +996,14 @@
     .rate{
       padding: 30px 0;
       overflow: hidden;
+      text-align: center;
       .rate_outer{
         border: 1px solid #fb4433;
         border-radius: 6px;
-        width: 90%;
+        width: 80%;
         overflow: hidden;
-        float: left;
+        display: inline-block;
+        vertical-align: middle;
         .rate_inner{
           border-radius: 6px;
           border: 1.5px solid #000;
@@ -1012,7 +1014,8 @@
         }
       }
       span{
-        float: left;
+        display: inline-block;
+        vertical-align: middle;
         color: #fb4433; 
         font-family: NetflixSans;
         font-size: 12px;
@@ -1026,28 +1029,39 @@
     li {
       display: inline-block;
       font-family: NetflixSans;
-      margin: 40px 0;
+      margin: 35px 0;
       line-height: 25px;
-      width: 33.3%;
+      width: 25%;
       padding: 0 30px;
       white-space: nowrap;
       border-right: 1px solid #ffffff2b;
-      text-align: center;
+
       &:last-child {
         border: none;
       }
 
       h1 {
-        font-size: 12px;
+        font-size: 14px;
         color: #fd4635;
         line-height: 30px;
       }
 
       p {
         color: #fff;
-        font-size: 24px;
+        font-size: 18px;
+
         b {
           font-size: 12px;
+        }
+        .copy_link {
+          background: url(../public/img/home_btn_hover.png) no-repeat center/ 100% 100%;
+          color: #fff;
+          border: none;
+          padding: 5px 5px;
+          height: 25px;
+          font-size: 12px;
+          margin-left: 10px;
+          cursor: pointer;
         }
       }
     }
@@ -1057,6 +1071,15 @@
     margin: 0 auto;
     padding: 30px 0 80px 0;
     text-align: center;
+    position: relative;
+    span{
+      color: #fff;
+      font-family: NetflixSans;
+      font-size: 12px;
+      position: absolute;
+      top: 80px;
+      margin-left: 10px;
+    }
     input{
       background: #191d22;
       border: none;
@@ -1074,6 +1097,12 @@
       width: 120px;
       font-size: 14px;
       margin: 0 20px;
+      &.max{
+        width: 65px;
+        height: 25px;
+        background-size: 100% 100%;
+        margin-left: -80px;
+      }
     }
   }
 }
@@ -2102,5 +2131,241 @@
       }
     }
   }
+
+  .ido {
+    .title {
+      margin-top: 100px;
+      height: 50px;
+    }
+
+    .content {
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+
+      .round {
+        display: inline-block;
+
+        li {
+          background: url(../public/img/btn_round.png) no-repeat center / auto 41.5%;
+          width: 110px;
+          height: 60px;
+          color: #FF0034;
+          font-family: NetflixSans;
+          font-size: 12px;
+          text-align: center;
+          line-height: 60px;
+          display: inline-block;
+
+          &.active {
+            background: url(../public/img/btn_round_active.png) no-repeat center / auto 100%;
+            color: #fff;
+          }
+        }
+      }
+
+      .line {
+        background: url(../public/img/round1_line.png) no-repeat center / 64% auto;
+        height: 50px;
+        margin-top: -20px;
+
+        &.line1 {
+          background-image: url(../public/img/round1_line.png);
+        }
+
+        &.line2 {
+          background-image: url(../public/img/round2_line.png);
+        }
+
+        &.line3 {
+          background-image: url(../public/img/round3_line.png);
+        }
+      }
+
+      .box {
+        width: 96%;
+        margin: 0 auto;
+
+        .box_title {
+          color: #fff;
+          background: #fd4635;
+          font-family: NetflixSans;
+          font-size: 14px;
+          overflow: hidden;
+          padding: 8px 20px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+
+          .fl {
+            float: left;
+          }
+
+          .fr {
+            float: right;
+          }
+        }
+
+        .box_content {
+          background: #3e38382e;
+
+          ul {
+            li {
+              display: inline-block;
+              font-family: NetflixSans;
+              margin: 25px 0;
+              line-height: 25px;
+              width: 50%;
+              padding: 0 30px;
+              white-space: nowrap;
+              border-right: 1px solid #ffffff2b;
+
+              &:last-child {
+                border: none;
+              }
+
+              h1 {
+                font-size: 14px;
+                color: #fd4635;
+                line-height: 30px;
+              }
+
+              p {
+                color: #fff;
+                font-size: 16px;
+
+                b {
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .rate {
+        padding: 30px 10px;
+        overflow: hidden;
+        text-align: center;
+
+        .rate_outer {
+          border: 1px solid #fb4433;
+          border-radius: 6px;
+          width: 80%;
+          overflow: hidden;
+          display: inline-block;
+          vertical-align: middle;
+
+          .rate_inner {
+            border-radius: 6px;
+            border: 1.5px solid #000;
+            background: #fb4433;
+            height: 12px;
+            width: 40%;
+            border-radius: 6px;
+          }
+        }
+
+        span {
+          display: inline-block;
+          vertical-align: middle;
+          color: #fb4433;
+          font-family: NetflixSans;
+          font-size: 12px;
+          padding: 0 20px;
+        }
+      }
+    }
+
+    .info {
+      width: 96%;
+      margin: 0 auto;
+
+      li {
+        display: inline-block;
+        font-family: NetflixSans;
+        margin: 25px 0;
+        line-height: 25px;
+        width: 50%;
+        padding: 0 30px;
+        white-space: nowrap;
+        border-right: 1px solid #ffffff2b;
+
+        &:last-child {
+          border: none;
+        }
+
+        h1 {
+          font-size: 14px;
+          color: #fd4635;
+          line-height: 30px;
+        }
+
+        p {
+          color: #fff;
+          font-size: 18px;
+
+          b {
+            font-size: 12px;
+          }
+
+          .copy_link {
+            background: url(../public/img/home_btn_hover.png) no-repeat center/ 100% 100%;
+            color: #fff;
+            border: none;
+            padding: 5px 5px;
+            height: 25px;
+            font-size: 12px;
+            margin-left: 10px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .input {
+      width: 100%;
+      margin: 0 auto;
+      padding: 30px 0 120px 0;
+      text-align: center;
+      position: relative;
+
+      span {
+        color: #fff;
+        font-family: NetflixSans;
+        font-size: 12px;
+        position: absolute;
+        top: 80px;
+        margin-left: 10px;
+      }
+
+      input {
+        background: #191d22;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 15px;
+        color: #fff;
+        width: 200px;
+      }
+
+      button {
+        background: url(../public/img/home_btn_hover.png) no-repeat center/auto 100%;
+        border: none;
+        cursor: pointer;
+        color: #fff;
+        height: 30px;
+        width: 88px;
+        font-size: 14px;
+        margin: 0 20px;
+
+        &.max {
+          width: 65px;
+          height: 25px;
+          background-size: 100% 100%;
+          margin-left: -80px;
+        }
+      }
+    }
+  }
+
 
 }

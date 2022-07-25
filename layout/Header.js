@@ -58,7 +58,7 @@ const Header = (props) => {
                         <Link href="/invite">{t('invite')}</Link>
                     </div>
                     <div className={styles.right_text}>
-                        <a>IDO</a>
+                        <Link href="/ido">IDO</Link>
                         <a>{t('buytor')}</a>
                     </div>
                 </div>
@@ -67,7 +67,7 @@ const Header = (props) => {
                 <ul onClick={(e) => { e.stopPropagation() }}>
                     <li><Link href="/">{t('home')}</Link></li>
                     <li><Link href="/invite">{t('invite')}</Link></li>
-                    <li>IDO</li>
+                    <li><Link href="/ido">IDO</Link></li>
                     <li>{t('buytor')}</li>
                 </ul>
             </nav>
