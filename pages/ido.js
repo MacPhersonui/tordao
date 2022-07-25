@@ -145,7 +145,7 @@ const Home = ({
                 const myInvestment3 = await idoContract.methods.getMyInvestment(account, 2).call()
                 setMyInvestment([myInvestment1, myInvestment2, myInvestment3])
                 console.log("myInvestment", myInvestment)
-                setMaxDeposit(utils.formatEther(maxDeposit) * weighting / 100)
+                setMaxDeposit(utils.formatEther(maxDeposit))
                 const lockInvestment = await idoContract.methods.getLockInvestment(account).call()
                 console.log("lockInvestment", lockInvestment)
                 const remainingInvestment = await idoContract.methods.getRemainingInvestment(account).call()
@@ -431,10 +431,9 @@ const Home = ({
                                                     {
                                                         utils.formatEther(
                                                             period == 0 ? totalInvestment.totalInvestment1 :
-                                                            period == 1 ? totalInvestment.totalInvestment1 :
-                                                            period == 2 ? totalInvestment.totalInvestment1 :
-                                                            "0"
-                                                        )
+                                                            period == 1 ? totalInvestment.totalInvestment2 :
+                                                            period == 2 ? totalInvestment.totalInvestment3 :
+                                                            "0")
                                                     } <b>USDT</b></p>
                                             </li>
                                             <li>
