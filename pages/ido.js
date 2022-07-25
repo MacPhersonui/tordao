@@ -389,6 +389,11 @@ const Home = ({
                     <div className={styles.main}>
                         <div className={styles.ido}>
                             <div className={styles.title}></div>
+                            <div className={styles.rule}>
+                                <p>{t('ido_rule1')} </p>
+                                <p>{t('ido_rule2')} </p>
+                                <p>{t('ido_rule3')} </p>
+                            </div>
                             <div className={styles.content}>
                                 <ul className={styles.round}>
                                     <li className={cx({ active: period == 0 })}>Round 1</li>

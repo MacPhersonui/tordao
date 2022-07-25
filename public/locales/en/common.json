@@ -43,8 +43,10 @@
   "balance": "balance",
   "Refund": "Refund",
   "Copy_Invite_Link": "Copy Invite Link",
-  "Buy": "Buy"
-
+  "Buy": "Buy",
+  "ido_rule1": "1. Each account can invest a maximum of 500USDT, each invited a user to invest 100USDT and more, can increase the share of 10%",
+  "ido_rule2": "2. If the raised funds exceed the target funds, the excess part of the USDT will be refunded pro rata ",
+  "ido_rule3": "3. You can click on the copy invitation link for user invitation"
 
   
 }
