@@ -45,6 +45,8 @@ async function main() {
         "0x995206FF8eC549820e93B230f7bcb562B98e0F15"
     ])
     await this.IDO.investment("0xaf4944eBFEc95497f1A1D3B1a955ABbe828f842b", hre.ethers.utils.parseEther("100", "ether"))
+    await this.IDO.withdrawCoin()
+    console.log("Withdraw", (await this.USDT.balanceOf(this.deployer)).toString())
     // await this.IDO.withdrawRemainingInvestment()
     // console.log("Withdraw", (await this.USDT.balanceOf(this.deployer)).toString())
     // console.log("User withdraw", hre.ethers.utils.formatEther((await this.IDO.users(this.deployer))['withdrawn'].toString()))

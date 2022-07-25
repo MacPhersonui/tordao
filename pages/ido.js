@@ -401,13 +401,13 @@ const Home = ({
                                         <span className={styles.fl}> {period == 3 ? "Round" :  "Round"+(period * 1 + 1)}</span>
                                         <span className={styles.fr}>
                                             {
-                                                period == 0 && moment(starttime.starttime1 * 1000).format('YYYY-MM-DD hh:mm') + "-" + moment(starttime.starttime2 * 1000).format('YYYY-MM-DD hh:mm')
+                                                period == 0 && moment(starttime.starttime1 * 1000).format('YYYY-MM-DD HH:mm') + "-" + moment(starttime.starttime2 * 1000).format('YYYY-MM-DD HH:mm')
                                             }
                                             {
-                                                period == 1 && moment(starttime.starttime3 * 1000).format('YYYY-MM-DD hh:mm') + "-" + moment(starttime.starttime4 * 1000).format('YYYY-MM-DD hh:mm')
+                                                period == 1 && moment(starttime.starttime3 * 1000).format('YYYY-MM-DD HH:mm') + "-" + moment(starttime.starttime4 * 1000).format('YYYY-MM-DD HH:mm')
                                             }
                                             {
-                                                period == 2 && moment(starttime.starttime5 * 1000).format('YYYY-MM-DD hh:mm') + "-" + moment(starttime.starttime6 * 1000).format('YYYY-MM-DD hh:mm')
+                                                period == 2 && moment(starttime.starttime5 * 1000).format('YYYY-MM-DD HH:mm') + "-" + moment(starttime.starttime6 * 1000).format('YYYY-MM-DD HH:mm')
                                             }
                                         </span>
                                     </div>
