@@ -221,25 +221,13 @@ const Home = ({
         console.log("getProgress", period)
         if (period == 0){
             console.log("getProgress1", totalInvestment.totalInvestment1, IDO.IDO1, IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1)
-            if (IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1) {
-                return (totalInvestment.totalInvestment1 / IDO.IDO1 * 100).toFixed(2)
-            }else{
-                return 100
-            }
+            return (totalInvestment.totalInvestment1 / IDO.IDO1 * 100).toFixed(2)
         }
         if (period == 1) {
-            if (IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1) {
-                return (totalInvestment.totalInvestment2 / IDO.IDO2 * 100).toFixed(2)
-            } else {
-                return 100
-            }
+            return (totalInvestment.totalInvestment2 / IDO.IDO2 * 100).toFixed(2)
         }
         if (period == 2) {
-            if (IDO.IDO3 * 1 >= totalInvestment.totalInvestment3 * 1) {
-                return (totalInvestment.totalInvestment3 / IDO.IDO3 * 100).toFixed(2)
-            } else {
-                return 100
-            }
+            return (totalInvestment.totalInvestment3 / IDO.IDO3 * 100).toFixed(2)
         }
         return 0
     }
@@ -477,7 +465,7 @@ const Home = ({
                                 </div>
                                 <div className={styles.rate}>
                                     <div className={styles.rate_outer}>
-                                        <div className={styles.rate_inner} style={{'width':getProgress()+"%"}}></div>
+                                        <div className={styles.rate_inner} style={{'width':(getProgress() > 100 ? 100 : getProgress())+"%"}}></div>
                                     </div>
                                     <span>{getProgress()}%</span>
                                 </div>
