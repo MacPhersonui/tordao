@@ -1035,7 +1035,7 @@
       padding: 0 30px;
       white-space: nowrap;
       border-right: 1px solid #ffffff2b;
-
+      text-align: center;
       &:last-child {
         border: none;
       }
@@ -1124,6 +1124,7 @@
     top:50%;
     left: 50%;
     margin: -47px 0 0 -140px;
+    text-align: center;
     h1{
       font-size: 40px;
       font-weight: bold;

@@ -31,7 +31,20 @@
   "invite_text8": "Connect Wallet And Create Link",
   "invite_text9": "Share Rank",
   "invite_text10": "Invite List",
-  "invite_text11": "My inviter"
+  "invite_text11": "My inviter",
+  "Investment": "Investment",
+  "Total": "Total",
+  "Unit_price": "Unit price",
+  "Time_remaining": "Time remaining",
+  "My_investment": "My investment",
+  "Obtainable_TOR": "Obtainable $TOR",
+  "My_invite_rate": "My invite rate",
+  "Available_refund": "Available refund",
+  "balance": "balance",
+  "Refund": "Refund",
+  "Copy_Invite_Link": "Copy Invite Link",
+  "Buy": "Buy"
 
 
+  
 }

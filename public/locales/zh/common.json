@@ -31,7 +31,18 @@
   "invite_text8": "链接钱包并创建邀请链接",
   "invite_text9": "邀请榜单",
   "invite_text10": "邀请列表",
-  "invite_text11": "我的邀请人"
+  "Investment": "已投资金额",
+  "Total": "目标金额",
+  "Unit_price": "单位价格",
+  "Time_remaining": "剩余时间",
+  "My_investment": "我的投资",
+  "Obtainable_TOR": "可获得的$TOR",
+  "My_invite_rate": "我的邀请加成",
+  "Available_refund": "可退款金额",
+  "balance": "余额",
+  "Refund": "退款",
+  "Copy_Invite_Link": "复制邀请链接",
+  "Buy": "购买"
 
 
 }

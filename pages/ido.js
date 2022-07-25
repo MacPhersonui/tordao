@@ -22,6 +22,13 @@ import {
 } from 'react-toastify'
 import Clipboard from 'react-clipboard.js'
 import BigNumber from "bignumber.js"
+import {
+    useTranslation,
+    Trans
+} from 'next-i18next'
+import {
+    serverSideTranslations
+} from 'next-i18next/serverSideTranslations'
 import 'react-toastify/dist/ReactToastify.css'
 
 const cx = classNames.bind(styles)
@@ -45,6 +52,10 @@ const Home = ({
         account,
         ethereum
     } = wallet
+
+    const {
+        t
+    } = useTranslation('common')
 
     const web3 = new Web3(ethereum)
     const [balance, setBalance] = useState(0)
@@ -400,7 +411,7 @@ const Home = ({
                                 <div className={cx(styles.line, { line1: period == 0, line2: period == 1, line3: period == 2 })}></div>
                                 <div className={styles.box}>
                                     <div className={styles.box_title}>
-                                        <span className={styles.fl}>Round {period * 1 + 1}</span>
+                                        <span className={styles.fl}> {period == 3 ? "Round" :  "Round"+(period * 1 + 1)}</span>
                                         <span className={styles.fr}>
                                             {
                                                 period == 0 && moment(starttime.starttime1 * 1000).format('YYYY-MM-DD hh:mm') + "-" + moment(starttime.starttime2 * 1000).format('YYYY-MM-DD hh:mm')
@@ -416,7 +427,7 @@ const Home = ({
                                     <div className={styles.box_content}>
                                         <ul>
                                             <li>
-                                                <h1>Investment</h1>
+                                                <h1>{t('Investment')}</h1>
                                                 <p>
                                                     {
                                                         utils.formatEther(
@@ -428,7 +439,7 @@ const Home = ({
                                                     } <b>USDT</b></p>
                                             </li>
                                             <li>
-                                                <h1>Total</h1>
+                                                <h1>{t('Total')}</h1>
                                                 <p>
                                                     {
                                                         utils.formatEther(
@@ -440,13 +451,13 @@ const Home = ({
                                                     } <b>USDT</b></p>
                                             </li>
                                             <li>
-                                                <h1>Unit price</h1>
+                                                <h1>{t('Unit_price')}</h1>
                                                 <p>
                                                     {torPrice[period]} <b>USDT/TOR</b>
                                                 </p>
                                             </li>
                                             <li>
-                                                <h1>Time remaining</h1>
+                                                <h1>{t('Time_remaining')}</h1>
                                                 <p>
                                                     {
                                                         remaining() > 0 ?
@@ -475,7 +486,7 @@ const Home = ({
                             </div>
                             <ul className={styles.info}>
                                 <li>
-                                    <h1>My investment</h1>
+                                    <h1>{t('My_investment')}</h1>
                                     <p>{investment()} / {
                                         period == 0 &&  maxDeposit
                                     }
@@ -487,34 +498,34 @@ const Home = ({
                                     } <b>USDT</b></p>
                                 </li>
                                 <li>
-                                    <h1>Obtainable $TOR</h1>
+                                    <h1>{t('Obtainable_TOR')}</h1>
                                     <p>{tor()} <b>TOR</b></p>
                                 </li>
                                 <li>
-                                    <h1>My invite rate</h1>
+                                    <h1>{t('Obtainable_TOR')}</h1>
                                     <p>{weighting} <b>%</b>
                                     <Clipboard onSuccess={()=>{
                                                             copyLink()
                                                         }} 
                                         className={styles.copy_link} data-clipboard-text={`https://tordao.io/ido?address=${account}`}>
                                         <i></i>
-                                        <span>Copy Link</span>
+                                        <span>{t('Copy_Invite_Link')}</span>
                                     </Clipboard>
                                     </p>
                                 </li>
                                 <li>
-                                    <h1>Available refund</h1>
+                                    <h1>{t('Available_refund')}</h1>
                                     <p>{remainingInvestment}
-                                    <button className={styles.copy_link} onClick={()=>withdrawUSDT()}>Refund</button></p>
+                                    <button className={styles.copy_link} onClick={()=>withdrawUSDT()}>{t('Refund')}</button></p>
                                 </li>
                             </ul>
                             <div className={styles.input}>
-                                <span>balance: {usdtBalance}</span>
+                                <span>{t('balance')}: {usdtBalance}</span>
                                 <input type="number" value={investmentValue} onChange={(e)=>{
                                     setInvestmentValue(e.target.value)
                                 }}/>
                                 <button className={styles.max} onClick={()=>setMax()}>Max</button>
-                                <button onClick={()=>investmentTor()}>Buy $TOR</button>
+                                <button onClick={()=>investmentTor()}>{t('Buy')} $TOR</button>
                             </div>
                         </div>
                     </div>
@@ -523,5 +534,14 @@ const Home = ({
         </HeaderFooter>
     )
 }
+
+export const getStaticProps = async ({
+    locale
+}) => ({
+    props: {
+        ...await serverSideTranslations(locale, ['common']),
+    },
+})
+
 
 export default withRouter(Home)
