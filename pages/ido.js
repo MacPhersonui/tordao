@@ -88,7 +88,7 @@ const Home = ({
     const [remainingInvestment, setRemainingInvestment] = useState(0)
     const [usdtBalance, setUsdtBalance] = useState(0)
     const [progress, setProgress] = useState(0)
-    const [showCountdown, setShowCountdown] = useState(true)
+    const [showCountdown, setShowCountdown] = useState(false)
     const torPrice = [0.8, 1, 1.4, 0]
 
     const { ido,usdt } = tokenConfig
@@ -153,7 +153,6 @@ const Home = ({
                 console.log("remainingInvestment", utils.formatEther(remainingInvestment))
                 const usdtBalance = await usdtContract.methods.balanceOf(account).call()
                 setUsdtBalance(utils.formatEther(usdtBalance))
-                setShowCountdown((new Date('Mon, 25 Jul 2022 12:00:00 GMT').getTime() - new Date().getTime()) > 0)
             }
         }, 3000)
         return () => {
