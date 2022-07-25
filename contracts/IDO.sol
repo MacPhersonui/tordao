@@ -257,11 +257,12 @@ contract IDO is Ownable {
         require(users[_inviter].referrer != msg.sender,"Your inviter's inviter can't be you");
         uint256 maxInvestment = maxDeposit.mul(getWeighting(msg.sender)).div(100);
         uint256 period = getWhichPeriod();
+        uint256 alreadyInvestment = getMyInvestment(msg.sender, period);
         // console.log("maxDeposit", maxInvestment);
         // console.log("period",period);
         // console.log("amount", _amount.add(getAvailableInvestment(msg.sender,period)));
         // require( _amount > 0 && _amount <= maxInvestment && _amount.add(getAvailableInvestment(msg.sender,period)) <= maxInvestment, "Exceeds the investment maximum!" );
-        require( _amount > 0 && _amount <= maxInvestment, "Exceeds the investment maximum!" );
+        require( _amount > 0 && _amount <= maxInvestment && _amount.add(alreadyInvestment) <= maxInvestment, "Exceeds the investment maximum!" );
 
         users[_inviter].invitee.push(msg.sender);
         if(users[msg.sender].referrer == 0x0000000000000000000000000000000000000000){

@@ -21,6 +21,7 @@ import {
     toast
 } from 'react-toastify'
 import Clipboard from 'react-clipboard.js'
+import BigNumber from "bignumber.js"
 import 'react-toastify/dist/ReactToastify.css'
 
 const cx = classNames.bind(styles)
@@ -48,7 +49,7 @@ const Home = ({
     const web3 = new Web3(ethereum)
     const [balance, setBalance] = useState(0)
     const [mintedNumber, setMintedNumber] = useState(0)
-    const [period, setPeriod] = useState(4)
+    const [period, setPeriod] = useState(3)
     const [starttime, setStarttime] = useState({
         starttime1: 0,
         starttime2: 0,
@@ -75,6 +76,8 @@ const Home = ({
     const [investmentValue, setInvestmentValue] = useState(0)
     const [remainingInvestment, setRemainingInvestment] = useState(0)
     const [usdtBalance, setUsdtBalance] = useState(0)
+    const [progress, setProgress] = useState(0)
+    const [showCountdown, setShowCountdown] = useState(true)
     const torPrice = [0.8, 1, 1.4, 0]
 
     const { ido,usdt } = tokenConfig
@@ -109,7 +112,7 @@ const Home = ({
                     totalInvestment2: totalInvestment2,
                     totalInvestment3: totalInvestment3
                 })
-                console.log(totalInvestment1, totalInvestment2, totalInvestment3)
+                console.log("totalInvestment", totalInvestment1, totalInvestment2, totalInvestment3)
                 const IDO1 = await idoContract.methods.IDO(0).call()
                 const IDO2 = await idoContract.methods.IDO(1).call()
                 const IDO3 = await idoContract.methods.IDO(2).call()
@@ -139,6 +142,7 @@ const Home = ({
                 console.log("remainingInvestment", utils.formatEther(remainingInvestment))
                 const usdtBalance = await usdtContract.methods.balanceOf(account).call()
                 setUsdtBalance(utils.formatEther(usdtBalance))
+                setShowCountdown((new Date('Mon, 25 Jul 2022 12:00:00 GMT').getTime() - new Date().getTime()) > 0)
             }
         }, 3000)
         return () => {
@@ -180,48 +184,49 @@ const Home = ({
     const tor = () => {
         let tor = 0
         if (period == 0){
-            if (IDO.IDO1 >= totalInvestment.totalInvestment1){
-                tor += myInvestment[0] / torPrice[0]
+            if (IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1){
+                tor += myInvestment[0] * 1 / torPrice[0] * 1
             } else {
-                tor += myInvestment[0] / torPrice[0] * (IDO.IDO1 / totalInvestment.totalInvestment1)
+                tor += myInvestment[0]* 1 / torPrice[0] * (IDO.IDO1 * 1 / totalInvestment.totalInvestment1 * 1)
             }
         }
         if (period == 1) {
-            if (IDO.IDO2 >= totalInvestment.totalInvestment2) {
+            if (IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1) {
                 tor += myInvestment[1] / torPrice[1]
             } else {
                 tor += myInvestment[1] / torPrice[1] * (IDO.IDO2 / totalInvestment.totalInvestment2)
             }
         }
         if (period == 2) {
-            if (IDO.IDO3 >= totalInvestment.totalInvestment3) {
+            if (IDO.IDO3 * 1 >= totalInvestment.totalInvestment3 * 1) {
                 tor += myInvestment[2] / torPrice[2]
             } else {
                 tor += myInvestment[2] / torPrice[2] * (IDO.IDO3 / totalInvestment.totalInvestment3)
             }
         }
-        return utils.formatEther(tor+"")
+        return utils.formatEther(new BigNumber(tor).toFixed())
     }
 
     const getProgress = () => {
-        console.log("getProgress")
+        console.log("getProgress", period)
         if (period == 0){
-            if (IDO.IDO1 >= totalInvestment.totalInvestment1) {
-                return totalInvestment.totalInvestment1 / IDO.IDO1 * 100
+            console.log("getProgress1", totalInvestment.totalInvestment1, IDO.IDO1, IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1)
+            if (IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1) {
+                return (totalInvestment.totalInvestment1 / IDO.IDO1 * 100).toFixed(2)
             }else{
                 return 100
             }
         }
         if (period == 1) {
-            if (IDO.IDO2 >= totalInvestment.totalInvestment2) {
-                return totalInvestment.totalInvestment2 / IDO.IDO2 * 100
+            if (IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1) {
+                return (totalInvestment.totalInvestment2 / IDO.IDO2 * 100).toFixed(2)
             } else {
                 return 100
             }
         }
         if (period == 2) {
-            if (IDO.IDO3 >= totalInvestment.totalInvestment3) {
-                return totalInvestment.totalInvestment3 / IDO.IDO3 * 100
+            if (IDO.IDO3 * 1 >= totalInvestment.totalInvestment3 * 1) {
+                return (totalInvestment.totalInvestment3 / IDO.IDO3 * 100).toFixed(2)
             } else {
                 return 100
             }
@@ -261,7 +266,7 @@ const Home = ({
         if (checkWallet()) return
         let inviter = router.query.address
         if(!inviter) {
-            inviter = "0x4e1d4C49267F559192188D9dB79D955a65B89247"
+            inviter = "0x343e53D0d06FBF692336CcF871d4c89aD8B706Be"
         }
         const usdtAllowance = await usdtContract.methods.allowance(account, ido.address).call()
         console.log("usdtAllowance", usdtAllowance)
@@ -290,10 +295,60 @@ const Home = ({
         toast.dark('🚀 Copy success!', toastConfig)
     }
 
+    const setMax = () => {
+        let max = maxDeposit * (period + 1)
+        console.log("max1", max, myInvestment[0])
+        if(period == 3) {
+            setInvestmentValue(0)
+            return
+        }
+        console.log(maxDeposit * 1 - utils.formatEther(myInvestment[period]) * 1)
+        max = maxDeposit * 1 - utils.formatEther(myInvestment[period]) * 1
+        if (usdtBalance < max){
+            setInvestmentValue(usdtBalance)
+        }else{
+            setInvestmentValue(max)
+        }
+        
+    }
+
     return (
         <HeaderFooter activeIndex={1}>
             <ToastContainer />
             <main>
+                {
+                    showCountdown ?
+                        <div className={styles.countdown}>
+                        <Timer
+                            ormatValue={(value) => `${(value < 10 ? `0${value}` : value)} `}
+                            initialTime={
+                            new Date('Mon, 25 Jul 2022 12:00:00 GMT').getTime() -
+                                new Date().getTime()
+                            }
+                            lastUnit="h"
+                            direction="backward"
+                        >
+                            <ul>
+                            <h1>Coming soon</h1>
+                            <li>
+                                <h1><Timer.Hours /></h1>
+                                <p>hours</p>
+                            </li>
+                            <li></li>
+                            <li>
+                                <h1><Timer.Minutes /></h1>
+                                <p>minutes</p>
+                            </li>
+                            <li></li>
+                            <li>
+                                <h1><Timer.Seconds /></h1>
+                                <p>seconds</p>
+                            </li>
+                            </ul>
+                        </Timer>
+                    </div> : ""
+                }
+                
                 <div className={styles.container}>
                     <div className={styles.mask}>
                         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAAB+CAYAAADiI6WIAAAACXBIWXMAABYlAAAWJQFJUiTwAAADfElEQVR4nO3d61EbMRSG4e+kAdIBdBA6gA5CB0k6oARKoASnA9MBqSCkA0qACpTZQR4cB/BtJR3pvM+MZzLDH2XflXzblSXpRlLiEevxSQiJ8EERPijCB0X4oAgfFOGDInxQhA+K8EERPijCB0X4oAgfFOGDInxQhA+K8EERPijCB0X4oAgfFOGDMkln+bHuMv/7Mv/tNPqBGo2llLb+l8xsin8u6SqfDJwIndsp/CYzm06C7/lE4CTo0EHh15nZFP9a0kXsQ9mXo8Ov5FVgOgG+hTqCnZot/IqZXeYbMVkBHJs9/IqZTa8BbiWdjHO4xlEsvF7if5a0kPQ13qH1regHOCmlp5TS9OLvh6TnAY7XMIrO+HX5xd+St38+VAuv16X/XtIX34dlfFU/q5+W/vzJ35+gx9uN6l/SrMW/83tYxld1qd9kZgs+8Gmj6deyKaXpvf7PlmOIqvn38cRvw8WFGMSvz80VOMSvy9WlV8Svx901d8Svw+XFlsQvz+1VtsQvy/Xl1cQvx/119cQvo4sbKog/v27upCH+vLq6hYr48+nu3jniz6PLmyaJf7xu75Yl/nG6vk2a+Ifr/v544h9miI0RiL+/YXbEIP5+htoKhfi7G24PHOLvZsjNj4i/3bC7XhH/Y0Nvd0b89w2/zx3x3xZig0Pi/y/MzpbE/1eoLU2J/yrcXrbEfxFyE2PiB969Onr80NuWR44ffr/6qPHDh1fQ+ITPosUn/JpI8Qm/IUp8wr8hQnzCv2P0+IT/wMjxCb/FqPEJv4MR4xN+R6PFJ/weRopP+D2NEp/wBxghPuEP1Ht8wh+h5/iEP1Kv8Qk/gx7jE34mvcUn/Ix6ik/4mfUSn/AF9BCf8IV4j0/4gjzHb/pLk1GY2dLbb+gTvgKPv6LNUl+Bx1/RZsZXlGf+g6TT1mNhxleUZ/6VpOfWYyF8ZSmlacZftx4HS30jrV/pE76R/Hz/KOmkxQhY6hvJz/fNlnxmfGNmNr2/v6g9CmZ8ezctRkD4xlJK04y/qz0KlnoHzOxc0u+aI2HGO5Df2/+qORLC+3FbcyQs9Y6Y2WOtz/GZ8b4sa42G8L4sao2Gpd6ZWss9M96f+xojIrw/VZ7nCe/PQ40R8RzvkJk9lf66lhnvU/FZT3ifir/AI3xQhPeJGY8yCB8U4YPifbxDZnYmabrFugxJfwFEfusKcp/RWAAAAABJRU5ErkJggg==" className={styles.one}></img>
@@ -458,7 +513,7 @@ const Home = ({
                                 <input type="number" value={investmentValue} onChange={(e)=>{
                                     setInvestmentValue(e.target.value)
                                 }}/>
-                                <button className={styles.max}>Max</button>
+                                <button className={styles.max} onClick={()=>setMax()}>Max</button>
                                 <button onClick={()=>investmentTor()}>Buy $TOR</button>
                             </div>
                         </div>

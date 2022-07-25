@@ -1,10 +1,10 @@
 module.exports = {
+    usdt: {
+        address: "0x55d398326f99059fF775485246999027B3197955",
+        abi: require("./abi/USDT.json"),
+    },
     ido: {
-        address: "0xA647DE6D9E49DAD8931699b7e6912F2eE1812A7F",
+        address: "0xef3f738eC8a8BE64695954fc1f736eBF8A4920E3",
         abi: require("./abi/IDO.json"),
     },
-    usdt: {
-        address: "0xD4132DbaA7B517354981dCC0C3536A4B6D8265E2",
-        abi: require("./abi/USDT.json"),
-    }
 }

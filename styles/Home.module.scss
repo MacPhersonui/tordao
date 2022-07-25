@@ -1107,6 +1107,43 @@
   }
 }
 
+.countdown{
+  position: fixed;
+  background: rgb(0 0 0 / 73%);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  color: #fff;
+  text-align: center;
+  ul{
+    display: inline-block;
+    font-family: NetflixSans;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin: -47px 0 0 -140px;
+    h1{
+      font-size: 40px;
+      font-weight: bold;
+      
+    }
+    li{
+      display: inline-block;
+      margin: 0 10px;
+      h1{
+        font-size: 60px;
+        font-weight: bold;
+        color:#fd4635;
+      }
+      p{
+        font-size: 14px;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 500px) {
   .main {
     width: 100%;
