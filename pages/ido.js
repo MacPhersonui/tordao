@@ -285,7 +285,7 @@ const Home = ({
                 from: account
             })
         }
-        await idoContract.methods.investment(inviter, utils.parseEther(investmentValue) ).send({
+        await idoContract.methods.investment(inviter, utils.parseEther(investmentValue+"") ).send({
             from: account
         })
         setInvestmentValue(0)
