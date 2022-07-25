@@ -273,6 +273,7 @@ const Home = ({
         await idoContract.methods.investment(inviter, utils.parseEther(investmentValue) ).send({
             from: account
         })
+        setInvestmentValue(0)
         toast.dark('🚀 Investment success!', toastConfig)
     }
 

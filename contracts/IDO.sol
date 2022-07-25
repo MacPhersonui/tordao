@@ -101,6 +101,13 @@ contract IDO is Ownable {
             users[_account[i]].referrer = _inviter[i];
         }
     }
+
+    function setDeposit(address[] memory _inviter, uint256[] memory _amount, uint256[] memory _timestamp) public onlyOwner{
+        require(_inviter.length == _amount.length, "Not equal");
+        for(uint256 i = 0; i < _inviter.length; i++ ){
+            users[_inviter[i]].deposits.push(Deposit(_amount[i], _timestamp[i]));
+        }
+    }
     
 
     function arrSum(Deposit[] memory _deposits, uint256 _starttime, uint256 _endtime) public view returns(uint256 sum){

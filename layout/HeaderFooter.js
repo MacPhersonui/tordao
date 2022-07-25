@@ -14,7 +14,6 @@ const HeaderFooter = (props) => {
       <div className={styles.wrapper}>
         <Head>
           <title>TorDao</title>
-          <meta itemProp="image" content="/logo.png" />
           <meta charSet="utf-8" />
           <meta name="renderer" content="webkit" />
           <meta name="author" content="TorDao" />
