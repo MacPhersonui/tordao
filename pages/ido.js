@@ -500,7 +500,7 @@ const Home = ({
                                     <p>{tor()} <b>TOR</b></p>
                                 </li>
                                 <li>
-                                    <h1>{t('Obtainable_TOR')}</h1>
+                                    <h1>{t('My_invite_rate')}</h1>
                                     <p>{weighting} <b>%</b>
                                     <Clipboard onSuccess={()=>{
                                                             copyLink()
