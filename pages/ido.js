@@ -262,6 +262,7 @@ const Home = ({
 
     const investmentTor = async () => {
         if (checkWallet()) return
+        // if (investment() > maxDeposit * (period+1))
         let inviter = router.query.address
         if(!inviter) {
             inviter = "0x343e53D0d06FBF692336CcF871d4c89aD8B706Be"
