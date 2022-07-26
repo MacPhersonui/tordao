@@ -271,14 +271,14 @@ const Home = ({
                                         {t('invite_text11')}: <b>{router.query.address? formatAddress(router?.query?.address):""}</b>
                                     </div>
                                     {account ? <>
-                                        <div className={styles.invite_address}>https://tordao.io/invite?address={account}</div>
+                                        <div className={styles.invite_address}>https://tordao.io/ido?address={account}</div>
                                             <div className={styles.invite_qr}>
-                                                <QRCodeCanvas value={`https://tordao.io/invite?address=${account}`} bgColor="#ffffff" />
+                                                <QRCodeCanvas value={`https://tordao.io/ido?address=${account}`} bgColor="#ffffff" />
                                                 <ul className={styles.invite_btns}>
                                                     <li>
                                                         <Clipboard onSuccess={()=>{
                                                             copyLink()
-                                                        }} className={styles.copy_link} data-clipboard-text={`https://tordao.io/invite?address=${account}`}>
+                                                        }} className={styles.copy_link} data-clipboard-text={`https://tordao.io/ido?address=${account}`}>
                                                             <i></i>
                                                             <span>{t('invite_text5')}</span>
                                                         </Clipboard>
