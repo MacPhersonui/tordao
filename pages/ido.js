@@ -214,7 +214,7 @@ const Home = ({
                 tor += myInvestment[2] / torPrice[2] * (IDO.IDO3 / totalInvestment.totalInvestment3)
             }
         }
-        return utils.formatEther(new BigNumber(tor).toFixed())
+        return (utils.formatEther(new BigNumber(tor*weighting/100).toFixed()) * 1).toFixed(2)
     }
 
     const getProgress = () => {
@@ -289,7 +289,6 @@ const Home = ({
     }
 
     const copyLink = () => {
-        if (checkWallet()) return
         toast.dark('🚀 Copy success!', toastConfig)
     }
 
@@ -422,11 +421,11 @@ const Home = ({
                                                 <h1>{t('Investment')}</h1>
                                                 <p>
                                                     {
-                                                        utils.formatEther(
+                                                        (utils.formatEther(
                                                             period == 0 ? totalInvestment.totalInvestment1 :
                                                             period == 1 ? totalInvestment.totalInvestment2 :
                                                             period == 2 ? totalInvestment.totalInvestment3 :
-                                                            "0")
+                                                            "0") * 1).toFixed(2)
                                                     } <b>USDT</b></p>
                                             </li>
                                             <li>
