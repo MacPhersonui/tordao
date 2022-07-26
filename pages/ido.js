@@ -188,7 +188,7 @@ const Home = ({
         if (period == 2) {
             investments = myInvestment[0] + myInvestment[1] + myInvestment[2]
         }
-        return utils.formatEther(investments + "")
+        return (utils.formatEther(investments + "") * 1 ).toFixed(2)
     }
 
     const tor = () => {
