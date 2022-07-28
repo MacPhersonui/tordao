@@ -197,7 +197,7 @@ const Home = ({
             if (IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1){
                 tor += myInvestment[0] * 1 / torPrice[0] * 1
             } else {
-                tor += myInvestment[0]* 1 / torPrice[0] * (IDO.IDO1 * 1 / totalInvestment.totalInvestment1 * 1)
+                tor += myInvestment[0] * 1 / torPrice[0] * (IDO.IDO1 * 1 / totalInvestment.totalInvestment1 * 1) - 5000000000000000000
             }
         }
         if (period == 1) {
@@ -214,7 +214,7 @@ const Home = ({
                 tor += myInvestment[2] / torPrice[2] * (IDO.IDO3 / totalInvestment.totalInvestment3)
             }
         }
-        return (utils.formatEther(new BigNumber(tor).toFixed()) * 1).toFixed(2)
+        return (utils.formatEther(new BigNumber(tor).toFixed()) * 1 ).toFixed(2)
     }
 
     const getProgress = () => {
