@@ -179,7 +179,7 @@ const Home = ({
 
     const investment = () => {
         let investments = 0
-        if(period == 0){
+        if (period == 0 || period == 3) {
             investments = myInvestment[0]
         }
         if (period == 1) {
@@ -193,7 +193,7 @@ const Home = ({
 
     const tor = () => {
         let tor = 0
-        if (period == 0){
+        if (period == 0 || period == 3) {
             if (IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1){
                 tor += myInvestment[0] * 1 / torPrice[0] * 1
             } else {
@@ -264,6 +264,7 @@ const Home = ({
         if (checkWallet()) return
         // if (investment() > maxDeposit * (period+1))
         let inviter = router.query.address
+        console.log("inviter", inviter)
         if(!inviter) {
             inviter = "0x343e53D0d06FBF692336CcF871d4c89aD8B706Be"
         }
