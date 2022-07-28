@@ -214,7 +214,7 @@ const Home = ({
                 tor += myInvestment[2] / torPrice[2] * (IDO.IDO3 / totalInvestment.totalInvestment3)
             }
         }
-        return (utils.formatEther(new BigNumber(tor*weighting/100).toFixed()) * 1).toFixed(2)
+        return (utils.formatEther(new BigNumber(tor).toFixed()) * 1).toFixed(2)
     }
 
     const getProgress = () => {
@@ -468,7 +468,7 @@ const Home = ({
                                                         >
                                                             <Timer.Days />D <Timer.Hours />H <Timer.Minutes />M <Timer.Seconds />S
                                                         </Timer>:
-                                                        "Unstar"
+                                                        "Unstart"
                                                     } 
                                                     
                                                 </p>
