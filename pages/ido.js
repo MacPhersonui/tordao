@@ -149,7 +149,7 @@ const Home = ({
                 const lockInvestment = await idoContract.methods.getLockInvestment(account).call()
                 console.log("lockInvestment", lockInvestment)
                 const remainingInvestment = await idoContract.methods.getRemainingInvestment(account).call()
-                setRemainingInvestment(utils.formatEther(remainingInvestment))
+                setRemainingInvestment((utils.formatEther(remainingInvestment) * 1).toFixed(2))
                 console.log("remainingInvestment", utils.formatEther(remainingInvestment))
                 const usdtBalance = await usdtContract.methods.balanceOf(account).call()
                 setUsdtBalance(utils.formatEther(usdtBalance))
@@ -419,6 +419,13 @@ const Home = ({
                                     </div>
                                     <div className={styles.box_content}>
                                         <ul>
+                                            <li>
+                                                <h1>{t('Tokeninvestment')}</h1>
+                                                <p>
+                                                    {
+                                                        (utils.formatEther(new BigNumber(totalInvestment.totalInvestment1 * 1 + totalInvestment.totalInvestment2 * 1 + totalInvestment.totalInvestment3 * 1).toFixed()) * 1).toFixed(2)
+                                                    } <b>USDT</b></p>
+                                            </li>
                                             <li>
                                                 <h1>{t('Investment')}</h1>
                                                 <p>
