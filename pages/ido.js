@@ -197,7 +197,7 @@ const Home = ({
             if (IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1){
                 tor += myInvestment[0] * 1 / torPrice[0] * 1
             } else {
-                tor += myInvestment[0] * 1 / torPrice[0] * (IDO.IDO1 * 1 / totalInvestment.totalInvestment1 * 1) - 5000000000000000000
+                tor += myInvestment[0] * 1 / torPrice[0] * (IDO.IDO1 * 1 / totalInvestment.totalInvestment1 * 1)
             }
         }
         if (period == 1) {
