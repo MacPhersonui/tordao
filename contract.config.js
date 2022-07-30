@@ -8,7 +8,7 @@ module.exports = {
         abi: require("./abi/IDO.json"),
     },
     ido2: {
-        address: "0xFB59CfEC4AEe5C9c025817Ef72c4D971Fd583EFE",
+        address: "0x88BBEa47D49936cF703016316fE388c4f1C0C73a",
         abi: require("./abi/IDO2.json"),
     },
 }
