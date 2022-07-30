@@ -294,16 +294,16 @@ const Home = ({
         // if (investment() > maxDeposit * (period+1))
         let inviter = router.query.address
         let cookie_inviter = Cookies.get('inviter')
-        if (!inviter && !cookie_inviter) {
-            inviter = "0x343e53D0d06FBF692336CcF871d4c89aD8B706Be"
-        }
         if (inviter && !cookie_inviter){
             inviter = router.query.address
         }
         if (!inviter && cookie_inviter){
             inviter = cookie_inviter
         }
-        console.log("inviter", inviter)
+        if (!inviter && !cookie_inviter) {
+            inviter = "0x343e53D0d06FBF692336CcF871d4c89aD8B706Be"
+        }
+        console.log("inviter", !inviter && !cookie_inviter, inviter)
         const usdtAllowance = await usdtContract.methods.allowance(account, ido2.address).call()
         console.log("usdtAllowance", usdtAllowance)
         if (usdtAllowance == 0) {
