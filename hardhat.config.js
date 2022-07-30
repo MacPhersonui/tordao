@@ -153,7 +153,7 @@ module.exports = {
     //     runOnCompile: true,
     //     clear: true,
     //     flat: true,
-    //     // only: ['ERC20'],
+    //     only: ['IDO.sol'],
     // },
     etherscan: {
         apiKey: "XARD1DFR8AU129FVP25A33FRD6AE1EQSU3",

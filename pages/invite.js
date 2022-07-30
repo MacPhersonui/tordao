@@ -35,6 +35,8 @@ import {
 import {
     serverSideTranslations
 } from 'next-i18next/serverSideTranslations'
+import Cookies from 'js-cookie'
+
 const cx = classNames.bind(styles)
 
 const toastConfig = {
@@ -73,6 +75,10 @@ const Home = ({
 
     useEffect(async () => {
         const data = await getInviteRank()
+        let inviter = router.query.address
+        if (inviter) {
+            Cookies.set('inviter', inviter)
+        }
         setInviteRank(data)
         const timer = setInterval(async () => {
             if (account) {

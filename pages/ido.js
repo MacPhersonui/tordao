@@ -30,6 +30,7 @@ import {
     serverSideTranslations
 } from 'next-i18next/serverSideTranslations'
 import 'react-toastify/dist/ReactToastify.css'
+import Cookies from 'js-cookie'
 
 const cx = classNames.bind(styles)
 
@@ -44,8 +45,8 @@ const toastConfig = {
 }
 
 const Home = ({
-        router
-    }) => {
+    router
+}) => {
 
     const wallet = useWallet()
     const {
@@ -61,6 +62,7 @@ const Home = ({
     const [balance, setBalance] = useState(0)
     const [mintedNumber, setMintedNumber] = useState(0)
     const [period, setPeriod] = useState(3)
+    const [period2, setPeriod2] = useState(3)
     const [starttime, setStarttime] = useState({
         starttime1: 0,
         starttime2: 0,
@@ -86,26 +88,34 @@ const Home = ({
     const [weighting, setWeighting] = useState(0)
     const [investmentValue, setInvestmentValue] = useState(0)
     const [remainingInvestment, setRemainingInvestment] = useState(0)
+    const [remainingInvestment2, setRemainingInvestment2] = useState(0)
     const [usdtBalance, setUsdtBalance] = useState(0)
     const [progress, setProgress] = useState(0)
     const [showCountdown, setShowCountdown] = useState(false)
-    const torPrice = [0.8, 1, 1.4, 0]
+    const [totalBonusInvestment, setTotalBonusInvestment] = useState([0, 0])
+    const [totalInvite, setTotalInvite] = useState(0)
+    const torPrice = [1, 1.4, 0]
 
-    const { ido,usdt } = tokenConfig
+    const { ido, ido2, usdt } = tokenConfig
     const idoContract = new web3.eth.Contract(ido.abi, ido.address)
+    const ido2Contract = new web3.eth.Contract(ido2.abi, ido2.address)
     const usdtContract = new web3.eth.Contract(usdt.abi, usdt.address)
     console.log(idoContract)
 
     useEffect(async () => {
         checkWallet()
+        let inviter = router.query.address
+        if (inviter){
+            Cookies.set('inviter', inviter)
+        }
         const timer = setInterval(async () => {
             if (account) {
                 const starttime1 = await idoContract.methods.starttime(0).call()
                 const starttime2 = await idoContract.methods.starttime(1).call()
-                const starttime3 = await idoContract.methods.starttime(2).call()
-                const starttime4 = await idoContract.methods.starttime(3).call()
-                const starttime5 = await idoContract.methods.starttime(4).call()
-                const starttime6 = await idoContract.methods.starttime(5).call()
+                const starttime3 = await ido2Contract.methods.starttime(0).call()
+                const starttime4 = await ido2Contract.methods.starttime(1).call()
+                const starttime5 = await ido2Contract.methods.starttime(2).call()
+                const starttime6 = await ido2Contract.methods.starttime(3).call()
                 setStarttime({
                     starttime1: starttime1,
                     starttime2: starttime2,
@@ -114,10 +124,10 @@ const Home = ({
                     starttime5: starttime5,
                     starttime6: starttime6
                 })
-                console.log(starttime1, starttime2, starttime3, starttime4)
+                console.log(starttime1, starttime2, starttime3, starttime4, starttime5, starttime6)
                 const totalInvestment1 = await idoContract.methods.totalInvestment(0).call()
-                const totalInvestment2 = await idoContract.methods.totalInvestment(1).call()
-                const totalInvestment3 = await idoContract.methods.totalInvestment(2).call()
+                const totalInvestment2 = await ido2Contract.methods.totalInvestment(0).call()
+                const totalInvestment3 = await ido2Contract.methods.totalInvestment(1).call()
                 setTotalInvestment({
                     totalInvestment1: totalInvestment1,
                     totalInvestment2: totalInvestment2,
@@ -125,24 +135,31 @@ const Home = ({
                 })
                 console.log("totalInvestment", totalInvestment1, totalInvestment2, totalInvestment3)
                 const IDO1 = await idoContract.methods.IDO(0).call()
-                const IDO2 = await idoContract.methods.IDO(1).call()
-                const IDO3 = await idoContract.methods.IDO(2).call()
+                const IDO2 = await ido2Contract.methods.IDO(0).call()
+                const IDO3 = await ido2Contract.methods.IDO(1).call()
                 setIDO({
                     IDO1: IDO1,
                     IDO2: IDO2,
                     IDO3: IDO3
                 })
                 console.log(IDO1, IDO2, IDO3)
+                const totalBonusInvestment1 = ido2Contract.methods.totalBonusInvestment(0).call()
+                const totalBonusInvestment2 = ido2Contract.methods.totalBonusInvestment(1).call()
+                setTotalBonusInvestment([totalBonusInvestment1, totalBonusInvestment2])
+                
                 const period = await idoContract.methods.getWhichPeriod().call()
                 setPeriod(period)
-                const maxDeposit = await idoContract.methods.maxDeposit().call()
+                const period2 = await ido2Contract.methods.getWhichPeriod().call()
+                setPeriod2(period2)
+                console.log("period", period, period2)
+                const maxDeposit = await ido2Contract.methods.maxDeposit().call()
                 console.log("maxDeposit", maxDeposit)
-                const weighting = await idoContract.methods.getWeighting(account).call()
+                const weighting = await ido2Contract.methods.getWeighting(account, 9659268800).call()
                 setWeighting(weighting)
                 console.log("weighting", weighting)
                 const myInvestment1 = await idoContract.methods.getMyInvestment(account, 0).call()
-                const myInvestment2 = await idoContract.methods.getMyInvestment(account, 1).call()
-                const myInvestment3 = await idoContract.methods.getMyInvestment(account, 2).call()
+                const myInvestment2 = await ido2Contract.methods.getMyInvestment(account, 0).call()
+                const myInvestment3 = await ido2Contract.methods.getMyInvestment(account, 1).call()
                 setMyInvestment([myInvestment1, myInvestment2, myInvestment3])
                 console.log("myInvestment", myInvestment)
                 setMaxDeposit(utils.formatEther(maxDeposit))
@@ -151,6 +168,11 @@ const Home = ({
                 const remainingInvestment = await idoContract.methods.getRemainingInvestment(account).call()
                 setRemainingInvestment((utils.formatEther(remainingInvestment) * 1).toFixed(2))
                 console.log("remainingInvestment", utils.formatEther(remainingInvestment))
+                const remainingInvestment2 = await ido2Contract.methods.getRemainingInvestment(account).call()
+                setRemainingInvestment2((utils.formatEther(remainingInvestment2) * 1).toFixed(2))
+                console.log("remainingInvestment2", utils.formatEther(remainingInvestment2))
+                const totalInvite = await ido2Contract.methods.getMyInviteAmount(account).call()
+                setTotalInvite(totalInvite)
                 const usdtBalance = await usdtContract.methods.balanceOf(account).call()
                 setUsdtBalance(utils.formatEther(usdtBalance))
             }
@@ -162,15 +184,11 @@ const Home = ({
     }, [account])
 
     const remaining = () => {
-        if(period == 0){
-            console.log("remaining1", starttime.starttime2 * 1000 - new Date().getTime())
-            return starttime.starttime2 * 1000 - new Date().getTime()
-        }
-        if (period == 1) {
+        if (period2 == 0) {
             console.log("remaining2", starttime.starttime4 * 1000 - new Date().getTime())
             return starttime.starttime4 * 1000 - new Date().getTime()
         }
-        if (period == 2) {
+        if (period2 == 1) {
             console.log("remaining3", starttime.starttime6 * 1000 - new Date().getTime())
             return starttime.starttime6 * 1000 - new Date().getTime()
         }
@@ -182,51 +200,62 @@ const Home = ({
         if (period == 0 || period == 3) {
             investments = myInvestment[0]
         }
-        if (period == 1) {
-            investments = myInvestment[0] + myInvestment[1]
+        return (utils.formatEther(investments + "") * 1).toFixed(2)
+    }
+
+    const investment2 = () => {
+        let investments = 0
+        if (period2 == 0 && new Date().getTime() > starttime.starttime2 * 1000) {
+            investments = myInvestment[1] * 1
         }
-        if (period == 2) {
-            investments = myInvestment[0] + myInvestment[1] + myInvestment[2]
+        if (period2 == 1 && new Date().getTime() > starttime.starttime5 * 1000) {
+            investments = myInvestment[1] * 1 + myInvestment[2] * 1
         }
-        return (utils.formatEther(investments + "") * 1 ).toFixed(2)
+        return (utils.formatEther(investments + "") * 1).toFixed(2)
     }
 
     const tor = () => {
         let tor = 0
         if (period == 0 || period == 3) {
-            if (IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1){
-                tor += myInvestment[0] * 1 / torPrice[0] * 1
+            if (IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1) {
+                tor += myInvestment[0] * 1 / 0.8 * 1
             } else {
-                tor += myInvestment[0] * 1 / torPrice[0] * (IDO.IDO1 * 1 / totalInvestment.totalInvestment1 * 1)
+                tor += myInvestment[0] * 1 / 0.8 * (IDO.IDO1 * 1 / totalInvestment.totalInvestment1 * 1)
+            }
+        }
+        return (utils.formatEther(new BigNumber(tor).toFixed()) * 1).toFixed(2)
+    }
+
+    const tor2 = () => {
+        let tor = 0
+        if (period2 == 0) {
+            console.log("tor2", IDO.IDO2, totalInvestment.totalInvestment2, IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1)
+            if (IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1) {
+                tor += myInvestment[1] / torPrice[0]
+            } else {
+                tor += myInvestment[1] / torPrice[0] * (IDO.IDO2 / totalBonusInvestment[0])
             }
         }
         if (period == 1) {
-            if (IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1) {
-                tor += myInvestment[1] / torPrice[1]
-            } else {
-                tor += myInvestment[1] / torPrice[1] * (IDO.IDO2 / totalInvestment.totalInvestment2)
-            }
-        }
-        if (period == 2) {
             if (IDO.IDO3 * 1 >= totalInvestment.totalInvestment3 * 1) {
-                tor += myInvestment[2] / torPrice[2]
+                tor += myInvestment[2] / torPrice[1]
             } else {
-                tor += myInvestment[2] / torPrice[2] * (IDO.IDO3 / totalInvestment.totalInvestment3)
+                tor += myInvestment[2] / torPrice[1] * (IDO.IDO3 / totalBonusInvestment[1])
             }
         }
-        return (utils.formatEther(new BigNumber(tor).toFixed()) * 1 ).toFixed(2)
+        return (utils.formatEther(new BigNumber(tor).toFixed()) * 1).toFixed(2)
     }
 
     const getProgress = () => {
         console.log("getProgress", period)
-        if (period == 0){
-            console.log("getProgress1", totalInvestment.totalInvestment1, IDO.IDO1, IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1)
-            return (totalInvestment.totalInvestment1 / IDO.IDO1 * 100).toFixed(2)
-        }
-        if (period == 1) {
+        // if (period == 0){
+        //     console.log("getProgress1", totalInvestment.totalInvestment1, IDO.IDO1, IDO.IDO1 * 1 >= totalInvestment.totalInvestment1 * 1)
+        //     return (totalInvestment.totalInvestment1 / IDO.IDO1 * 100).toFixed(2)
+        // }
+        if (period2 == 0) {
             return (totalInvestment.totalInvestment2 / IDO.IDO2 * 100).toFixed(2)
         }
-        if (period == 2) {
+        if (period == 1) {
             return (totalInvestment.totalInvestment3 / IDO.IDO3 * 100).toFixed(2)
         }
         return 0
@@ -264,18 +293,25 @@ const Home = ({
         if (checkWallet()) return
         // if (investment() > maxDeposit * (period+1))
         let inviter = router.query.address
-        console.log("inviter", inviter)
-        if(!inviter) {
+        let cookie_inviter = Cookies.get('inviter')
+        if (!inviter && !cookie_inviter) {
             inviter = "0x343e53D0d06FBF692336CcF871d4c89aD8B706Be"
         }
-        const usdtAllowance = await usdtContract.methods.allowance(account, ido.address).call()
+        if (inviter && !cookie_inviter){
+            inviter = router.query.address
+        }
+        if (!inviter && cookie_inviter){
+            inviter = cookie_inviter
+        }
+        console.log("inviter", inviter)
+        const usdtAllowance = await usdtContract.methods.allowance(account, ido2.address).call()
         console.log("usdtAllowance", usdtAllowance)
-        if (usdtAllowance == 0){
-            await usdtContract.methods.approve(ido.address, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").send({
+        if (usdtAllowance == 0) {
+            await usdtContract.methods.approve(ido2.address, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").send({
                 from: account
             })
         }
-        await idoContract.methods.investment(inviter, utils.parseEther(investmentValue+"") ).send({
+        await ido2Contract.methods.investment(inviter, utils.parseEther(investmentValue + "")).send({
             from: account
         })
         setInvestmentValue(0)
@@ -290,64 +326,39 @@ const Home = ({
         toast.dark('🚀 Withdraw success!', toastConfig)
     }
 
+    const withdrawUSDT2 = async () => {
+        if (checkWallet()) return
+        await ido2Contract.methods.withdrawRemainingInvestment().send({
+            from: account
+        })
+        toast.dark('🚀 Withdraw success!', toastConfig)
+    }
+
     const copyLink = () => {
         toast.dark('🚀 Copy success!', toastConfig)
     }
 
     const setMax = () => {
-        let max = maxDeposit * (period + 1)
+        let max = maxDeposit
         console.log("max1", max, myInvestment[0])
-        if(period == 3) {
+        if (period2 == 2) {
             setInvestmentValue(0)
             return
         }
-        console.log(maxDeposit * 1 - utils.formatEther(myInvestment[period]) * 1)
-        max = maxDeposit * 1 - utils.formatEther(myInvestment[period]) * 1
-        if (usdtBalance < max){
+        console.log("max1", period2, myInvestment[period2 * 1 + 1])
+        max = maxDeposit * 1 - utils.formatEther(myInvestment[period2 * 1 + 1]) * 1
+        if (usdtBalance < max) {
             setInvestmentValue(usdtBalance)
-        }else{
+        } else {
             setInvestmentValue(max)
         }
-        
+
     }
 
     return (
         <HeaderFooter activeIndex={1}>
             <ToastContainer />
             <main>
-                {
-                    showCountdown ?
-                        <div className={styles.countdown}>
-                        <Timer
-                            ormatValue={(value) => `${(value < 10 ? `0${value}` : value)} `}
-                            initialTime={
-                            new Date('Mon, 25 Jul 2022 12:00:00 GMT').getTime() -
-                                new Date().getTime()
-                            }
-                            lastUnit="h"
-                            direction="backward"
-                        >
-                            <ul>
-                            <h1>Coming soon</h1>
-                            <li>
-                                <h1><Timer.Hours /></h1>
-                                <p>hours</p>
-                            </li>
-                            <li></li>
-                            <li>
-                                <h1><Timer.Minutes /></h1>
-                                <p>minutes</p>
-                            </li>
-                            <li></li>
-                            <li>
-                                <h1><Timer.Seconds /></h1>
-                                <p>seconds</p>
-                            </li>
-                            </ul>
-                        </Timer>
-                    </div> : ""
-                }
-                
                 <div className={styles.container}>
                     <div className={styles.mask}>
                         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAAB+CAYAAADiI6WIAAAACXBIWXMAABYlAAAWJQFJUiTwAAADfElEQVR4nO3d61EbMRSG4e+kAdIBdBA6gA5CB0k6oARKoASnA9MBqSCkA0qACpTZQR4cB/BtJR3pvM+MZzLDH2XflXzblSXpRlLiEevxSQiJ8EERPijCB0X4oAgfFOGDInxQhA+K8EERPijCB0X4oAgfFOGDInxQhA+K8EERPijCB0X4oAgfFOGDMkln+bHuMv/7Mv/tNPqBGo2llLb+l8xsin8u6SqfDJwIndsp/CYzm06C7/lE4CTo0EHh15nZFP9a0kXsQ9mXo8Ov5FVgOgG+hTqCnZot/IqZXeYbMVkBHJs9/IqZTa8BbiWdjHO4xlEsvF7if5a0kPQ13qH1regHOCmlp5TS9OLvh6TnAY7XMIrO+HX5xd+St38+VAuv16X/XtIX34dlfFU/q5+W/vzJ35+gx9uN6l/SrMW/83tYxld1qd9kZgs+8Gmj6deyKaXpvf7PlmOIqvn38cRvw8WFGMSvz80VOMSvy9WlV8Svx901d8Svw+XFlsQvz+1VtsQvy/Xl1cQvx/119cQvo4sbKog/v27upCH+vLq6hYr48+nu3jniz6PLmyaJf7xu75Yl/nG6vk2a+Ifr/v544h9miI0RiL+/YXbEIP5+htoKhfi7G24PHOLvZsjNj4i/3bC7XhH/Y0Nvd0b89w2/zx3x3xZig0Pi/y/MzpbE/1eoLU2J/yrcXrbEfxFyE2PiB969Onr80NuWR44ffr/6qPHDh1fQ+ITPosUn/JpI8Qm/IUp8wr8hQnzCv2P0+IT/wMjxCb/FqPEJv4MR4xN+R6PFJ/weRopP+D2NEp/wBxghPuEP1Ht8wh+h5/iEP1Kv8Qk/gx7jE34mvcUn/Ix6ik/4mfUSn/AF9BCf8IV4j0/4gjzHb/pLk1GY2dLbb+gTvgKPv6LNUl+Bx1/RZsZXlGf+g6TT1mNhxleUZ/6VpOfWYyF8ZSmlacZftx4HS30jrV/pE76R/Hz/KOmkxQhY6hvJz/fNlnxmfGNmNr2/v6g9CmZ8ezctRkD4xlJK04y/qz0KlnoHzOxc0u+aI2HGO5Df2/+qORLC+3FbcyQs9Y6Y2WOtz/GZ8b4sa42G8L4sao2Gpd6ZWss9M96f+xojIrw/VZ7nCe/PQ40R8RzvkJk9lf66lhnvU/FZT3ifir/AI3xQhPeJGY8yCB8U4YPifbxDZnYmabrFugxJfwFEfusKcp/RWAAAAABJRU5ErkJggg==" className={styles.one}></img>
@@ -398,22 +409,22 @@ const Home = ({
                             <div className={styles.content}>
                                 <ul className={styles.round}>
                                     <li className={cx({ active: period == 0 })}>Round 1</li>
-                                    <li className={cx({ active: period == 1 })}>Round 2</li>
-                                    <li className={cx({ active: period == 2 })}>Round 3</li>
+                                    <li className={cx({ active: period2 == 0 })}>Round 2</li>
+                                    <li className={cx({ active: period2 == 1 })}>Round 3</li>
                                 </ul>
-                                <div className={cx(styles.line, { line1: period == 0, line2: period == 1, line3: period == 2 })}></div>
+                                <div className={cx(styles.line, { line1: period == 0, line2: period2 == 0, line3: period2 == 1 })}></div>
                                 <div className={styles.box}>
                                     <div className={styles.box_title}>
-                                        <span className={styles.fl}> {period == 3 ? "Round" :  "Round"+(period * 1 + 1)}</span>
+                                        <span className={styles.fl}> {period2 == 2 ? "Round" : "Round" + (period2 * 1 + 2)}</span>
                                         <span className={styles.fr}>
                                             {
                                                 period == 0 && moment(starttime.starttime1 * 1000).format('YYYY-MM-DD HH:mm') + "-" + moment(starttime.starttime2 * 1000).format('YYYY-MM-DD HH:mm')
                                             }
                                             {
-                                                period == 1 && moment(starttime.starttime3 * 1000).format('YYYY-MM-DD HH:mm') + "-" + moment(starttime.starttime4 * 1000).format('YYYY-MM-DD HH:mm')
+                                                period2 == 0 && moment(starttime.starttime3 * 1000).format('YYYY-MM-DD HH:mm') + "-" + moment(starttime.starttime4 * 1000).format('YYYY-MM-DD HH:mm')
                                             }
                                             {
-                                                period == 2 && moment(starttime.starttime5 * 1000).format('YYYY-MM-DD HH:mm') + "-" + moment(starttime.starttime6 * 1000).format('YYYY-MM-DD HH:mm')
+                                                period2 == 1 && moment(starttime.starttime5 * 1000).format('YYYY-MM-DD HH:mm') + "-" + moment(starttime.starttime6 * 1000).format('YYYY-MM-DD HH:mm')
                                             }
                                         </span>
                                     </div>
@@ -432,9 +443,9 @@ const Home = ({
                                                     {
                                                         (utils.formatEther(
                                                             period == 0 ? totalInvestment.totalInvestment1 :
-                                                            period == 1 ? totalInvestment.totalInvestment2 :
-                                                            period == 2 ? totalInvestment.totalInvestment3 :
-                                                            "0") * 1).toFixed(2)
+                                                                period2 == 0 ? totalInvestment.totalInvestment2 :
+                                                                    period2 == 1 ? totalInvestment.totalInvestment3 :
+                                                                        "0") * 1).toFixed(2)
                                                     } <b>USDT</b></p>
                                             </li>
                                             <li>
@@ -443,16 +454,16 @@ const Home = ({
                                                     {
                                                         utils.formatEther(
                                                             period == 0 ? IDO.IDO1 :
-                                                            period == 1 ? IDO.IDO2 :
-                                                            period == 2 ? IDO.IDO3 :
-                                                            "0"
+                                                                period2 == 0 ? IDO.IDO2 :
+                                                                    period2 == 1 ? IDO.IDO3 :
+                                                                        "0"
                                                         )
                                                     } <b>USDT</b></p>
                                             </li>
                                             <li>
                                                 <h1>{t('Unit_price')}</h1>
                                                 <p>
-                                                    {torPrice[period]} <b>USDT/TOR</b>
+                                                    {torPrice[period2]} <b>USDT/TOR</b>
                                                 </p>
                                             </li>
                                             <li>
@@ -460,17 +471,17 @@ const Home = ({
                                                 <p>
                                                     {
                                                         remaining() > 0 ?
-                                                        <Timer
-                                                            formatValue={(value) => `${(value < 10 ? `0${value}` : value)} `}
-                                                            initialTime={ remaining() }
-                                                            lastUnit="d"
-                                                            direction="backward"
-                                                        >
-                                                            <Timer.Days />D <Timer.Hours />H <Timer.Minutes />M <Timer.Seconds />S
-                                                        </Timer>:
-                                                        "Unstart"
-                                                    } 
-                                                    
+                                                            <Timer
+                                                                formatValue={(value) => `${(value < 10 ? `0${value}` : value)} `}
+                                                                initialTime={remaining()}
+                                                                lastUnit="d"
+                                                                direction="backward"
+                                                            >
+                                                                <Timer.Days />D <Timer.Hours />H <Timer.Minutes />M <Timer.Seconds />S
+                                                            </Timer> :
+                                                            "Unstart"
+                                                    }
+
                                                 </p>
                                             </li>
                                         </ul>
@@ -478,53 +489,77 @@ const Home = ({
                                 </div>
                                 <div className={styles.rate}>
                                     <div className={styles.rate_outer}>
-                                        <div className={styles.rate_inner} style={{'width':(getProgress() > 100 ? 100 : getProgress())+"%"}}></div>
+                                        <div className={styles.rate_inner} style={{ 'width': (getProgress() > 100 ? 100 : getProgress()) + "%" }}></div>
                                     </div>
                                     <span>{getProgress()}%</span>
                                 </div>
+
+                                <div className={styles.box}>
+                                    <div className={styles.box_title}>
+                                        Round 1
+                                    </div>
+                                    <ul className={styles.info}>
+                                        <li>
+                                            <h1>{t('My_investment')}</h1>
+                                            <p>{investment()} / {maxDeposit}<b>USDT</b></p>
+                                        </li>
+                                        <li>
+                                            <h1>{t('Obtainable_TOR')}</h1>
+                                            <p>{tor()} <b>TOR</b></p>
+                                        </li>
+                                        <li>
+                                            <h1>{t('My_invite_rate')}</h1>
+                                            <p>100 <b>%</b>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <h1>{t('Available_refund')}</h1>
+                                            <p>{remainingInvestment}
+                                                <button className={styles.copy_link} onClick={() => withdrawUSDT()}>{t('Refund')}</button></p>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div className={styles.box}>
+                                    <div className={styles.box_title}>
+                                        Round 2 + Round3
+                                    </div>
+                                    <ul className={styles.info}>
+                                        <li>
+                                            <h1>{t('My_investment')}</h1>
+                                            <p>{investment2()} / {maxDeposit}<b>USDT</b></p>
+                                        </li>
+                                        <li>
+                                            <h1>{t('Obtainable_TOR')}</h1>
+                                            <p>{tor2()} <b>TOR</b></p>
+                                        </li>
+                                        <li>
+                                            <h1>{t('My_invite_rate')}({totalInvite} people)</h1>
+                                            <p>{weighting} <b>%</b>
+                                                <Clipboard onSuccess={() => {
+                                                    copyLink()
+                                                }}
+                                                    className={styles.copy_link} data-clipboard-text={`https://tordao.io/ido?address=${account}`}>
+                                                    <i></i>
+                                                    <span>{t('Copy_Invite_Link')}</span>
+                                                </Clipboard>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <h1>{t('Available_refund')}</h1>
+                                            <p>{remainingInvestment2}
+                                                <button className={styles.copy_link} onClick={() => withdrawUSDT2()}>{t('Refund')}</button></p>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <ul className={styles.info}>
-                                <li>
-                                    <h1>{t('My_investment')}</h1>
-                                    <p>{investment()} / {
-                                        period == 0 &&  maxDeposit
-                                    }
-                                    {
-                                        period == 1 && maxDeposit * 2
-                                    }
-                                    {
-                                        period == 2 && maxDeposit * 3
-                                    } <b>USDT</b></p>
-                                </li>
-                                <li>
-                                    <h1>{t('Obtainable_TOR')}</h1>
-                                    <p>{tor()} <b>TOR</b></p>
-                                </li>
-                                <li>
-                                    <h1>{t('My_invite_rate')}</h1>
-                                    <p>{weighting} <b>%</b>
-                                    <Clipboard onSuccess={()=>{
-                                                            copyLink()
-                                                        }} 
-                                        className={styles.copy_link} data-clipboard-text={`https://tordao.io/ido?address=${account}`}>
-                                        <i></i>
-                                        <span>{t('Copy_Invite_Link')}</span>
-                                    </Clipboard>
-                                    </p>
-                                </li>
-                                <li>
-                                    <h1>{t('Available_refund')}</h1>
-                                    <p>{remainingInvestment}
-                                    <button className={styles.copy_link} onClick={()=>withdrawUSDT()}>{t('Refund')}</button></p>
-                                </li>
-                            </ul>
                             <div className={styles.input}>
                                 <span>{t('balance')}: {usdtBalance}</span>
-                                <input type="number" value={investmentValue} onChange={(e)=>{
+                                <input type="number" value={investmentValue} onChange={(e) => {
                                     setInvestmentValue(e.target.value)
-                                }}/>
-                                <button className={styles.max} onClick={()=>setMax()}>Max</button>
-                                <button onClick={()=>investmentTor()}>{t('Buy')} $TOR</button>
+                                }} />
+                                <button className={styles.max} onClick={() => setMax()}>Max</button>
+                                <button onClick={() => investmentTor()}>{t('Buy')} $TOR</button>
                             </div>
                         </div>
                     </div>
