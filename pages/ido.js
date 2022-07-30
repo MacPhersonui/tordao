@@ -95,6 +95,7 @@ const Home = ({
     const [totalBonusInvestment, setTotalBonusInvestment] = useState([0, 0])
     const [totalInvite, setTotalInvite] = useState(0)
     const torPrice = [1, 1.4, 0]
+    const [repeatRemainingInvestment, setRepeatRemainingInvestment] = useState(0)
 
     const { ido, ido2, usdt } = tokenConfig
     const idoContract = new web3.eth.Contract(ido.abi, ido.address)
@@ -167,6 +168,7 @@ const Home = ({
                 console.log("lockInvestment", lockInvestment)
                 const remainingInvestment = await idoContract.methods.getRemainingInvestment(account).call()
                 setRemainingInvestment((utils.formatEther(remainingInvestment) * 1).toFixed(2))
+                setRepeatRemainingInvestment(remainingInvestment)
                 console.log("remainingInvestment", utils.formatEther(remainingInvestment))
                 const remainingInvestment2 = await ido2Contract.methods.getRemainingInvestment(account).call()
                 setRemainingInvestment2((utils.formatEther(remainingInvestment2) * 1).toFixed(2))
@@ -312,6 +314,38 @@ const Home = ({
             })
         }
         await ido2Contract.methods.investment(inviter, utils.parseEther(investmentValue + "")).send({
+            from: account
+        })
+        setInvestmentValue(0)
+        toast.dark('🚀 Investment success!', toastConfig)
+    }
+
+    const repeatInvestmentTor = async () => {
+        if (checkWallet()) return
+        await idoContract.methods.withdrawRemainingInvestment().send({
+            from: account
+        })
+        // if (investment() > maxDeposit * (period+1))
+        let inviter = router.query.address
+        let cookie_inviter = Cookies.get('inviter')
+        if (inviter && !cookie_inviter){
+            inviter = router.query.address
+        }
+        if (!inviter && cookie_inviter){
+            inviter = cookie_inviter
+        }
+        if (!inviter && !cookie_inviter) {
+            inviter = "0x343e53D0d06FBF692336CcF871d4c89aD8B706Be"
+        }
+        console.log("inviter", !inviter && !cookie_inviter, inviter)
+        const usdtAllowance = await usdtContract.methods.allowance(account, ido2.address).call()
+        console.log("usdtAllowance", usdtAllowance)
+        if (usdtAllowance == 0) {
+            await usdtContract.methods.approve(ido2.address, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").send({
+                from: account
+            })
+        }
+        await ido2Contract.methods.investment(inviter, utils.parseEther(remainingInvestment + "")).send({
             from: account
         })
         setInvestmentValue(0)
@@ -560,6 +594,7 @@ const Home = ({
                                 }} />
                                 <button className={styles.max} onClick={() => setMax()}>Max</button>
                                 <button onClick={() => investmentTor()}>{t('Buy')} $TOR</button>
+                                <button onClick={() => repeatInvestmentTor()}>{t('redelivery')}</button>
                             </div>
                         </div>
                     </div>

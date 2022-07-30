@@ -46,5 +46,6 @@
   "ido_rule1": "1. 每个账户最大可投资500USDT, 每邀请一个用户投入100USDT及以上, 即可增加份额10%",
   "ido_rule2": "2. 如果募集资金超过目标资金, 会多超出的部分的USDT按比例退还 ",
   "ido_rule3": "3. 可以点击复制邀请链接进行用户邀请 ",
-  "Tokeninvestment": "累计投资金额"
+  "Tokeninvestment": "累计投资金额",
+  "redelivery": "一键复投"
 }
