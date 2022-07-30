@@ -177,6 +177,7 @@ const Home = ({
                 setTotalInvite(totalInvite)
                 const usdtBalance = await usdtContract.methods.balanceOf(account).call()
                 setUsdtBalance(utils.formatEther(usdtBalance))
+                console.log("withdrawn", idoContract.methods)
             }
         }, 3000)
         return () => {
