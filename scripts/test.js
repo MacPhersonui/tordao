@@ -40,8 +40,8 @@ async function main() {
     // console.log("USDT", hre.ethers.utils.formatEther((await this.USDT.balanceOf("0xef3f738eC8a8BE64695954fc1f736eBF8A4920E3")).toString()))
 
 
-    this.IDO2 = await hre.ethers.getContractAt("IDO2", "0xFB59CfEC4AEe5C9c025817Ef72c4D971Fd583EFE")
-    await this.IDO2.withdrawCoin()
+    this.IDO2 = await hre.ethers.getContractAt("IDO2", "0x88BBEa47D49936cF703016316fE388c4f1C0C73a")
+    console.log(await this.IDO2.totalBonusInvestment[0])
 
     console.log("End")
 }

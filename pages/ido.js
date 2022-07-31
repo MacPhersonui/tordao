@@ -147,6 +147,7 @@ const Home = ({
                 const totalBonusInvestment1 = await ido2Contract.methods.totalBonusInvestment(0).call()
                 const totalBonusInvestment2 = await ido2Contract.methods.totalBonusInvestment(1).call()
                 setTotalBonusInvestment([totalBonusInvestment1, totalBonusInvestment2])
+                console.log("totalBonusInvestment1", totalBonusInvestment1)
                 
                 const period = await idoContract.methods.getWhichPeriod().call()
                 setPeriod(period)
@@ -240,7 +241,7 @@ const Home = ({
             } else {
                 console.log("tor22", myInvestment[1], IDO.IDO2, totalBonusInvestment[0])
                 if (totalBonusInvestment[0] != 0){
-                    tor += myInvestment[1] * 1 / torPrice[0] * (IDO.IDO2 / totalBonusInvestment[0])
+                    tor += myInvestment[1] * 1 * weighting / 100 / torPrice[0] * (IDO.IDO2 / totalBonusInvestment[0])
                 }
             }
         }
