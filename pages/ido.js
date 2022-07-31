@@ -309,6 +309,9 @@ const Home = ({
         if (!inviter && !cookie_inviter) {
             inviter = "0x343e53D0d06FBF692336CcF871d4c89aD8B706Be"
         }
+        if (inviter == account){
+            inviter = "0x343e53D0d06FBF692336CcF871d4c89aD8B706Be"
+        }
         console.log("inviter", !inviter && !cookie_inviter, inviter)
         const usdtAllowance = await usdtContract.methods.allowance(account, ido2.address).call()
         console.log("usdtAllowance", usdtAllowance)

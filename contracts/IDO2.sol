@@ -7,16 +7,17 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "hardhat/console.sol";
 
-contract IDO is Ownable {
+contract IDO2 is Ownable {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
     uint256 public decimals = 18;
-    uint256[] public IDO = [160000  * (10 ** decimals), 200000  * (10 ** decimals), 140000  * (10 ** decimals)];
-    uint256[] public starttime = [0, 0, 0, 0, 0, 0];
+    uint256[] public IDO = [ 200000  * (10 ** decimals), 140000  * (10 ** decimals)];
+    uint256[] public starttime = [0, 0, 0, 0];
     uint256 public approvedQuota = 100 * (10 ** decimals);
     uint256 public maxDeposit = 500 * (10 ** decimals);
-    uint256[] public totalInvestment = [0, 0, 0];
+    uint256[] public totalInvestment = [0, 0];
+    uint256[] public totalBonusInvestment = [0, 0];
     IERC20 public USDT;
     mapping(address => uint256) public investments;
     bool public start = true;
@@ -32,6 +33,8 @@ contract IDO is Ownable {
 		address[] invitee;
         address referrer;
         uint256 withdrawn;
+        uint256 bonusInvestment1;
+        uint256 bonusInvestment2;
 	}
 
     mapping (address => User) public users;
@@ -39,26 +42,39 @@ contract IDO is Ownable {
     constructor(address _usdt, uint256[] memory _starttime) {
         USDT = IERC20(_usdt);
         starttime = _starttime;
-        // 0x343e53D0d06FBF692336CcF871d4c89aD8B706Be <= 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+        // // 0x343e53D0d06FBF692336CcF871d4c89aD8B706Be <= 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
         // users[0x343e53D0d06FBF692336CcF871d4c89aD8B706Be].invitee.push(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266);
         // users[0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266].referrer = 0x343e53D0d06FBF692336CcF871d4c89aD8B706Be;
-        // users[0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266].deposits.push(Deposit(100 * (10 ** decimals), 1658237534));
+        // users[0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266].deposits.push(Deposit(100 * (10 ** decimals), 1659082401));
         // totalInvestment[0] = totalInvestment[0].add(100 * (10 ** decimals));
+        // updateTotalBonusInvestment(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266);
+        // if(users[0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266].referrer);
+        // if(users[users[0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266].referrer].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[users[0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266].referrer].referrer);
+
         // // 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 <= 0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281
         // users[0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266].invitee.push(0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281);
         // users[0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281].referrer = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
-        // users[0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281].deposits.push(Deposit(100 * (10 ** decimals), 1658237534));
-        // totalInvestment[0] = totalInvestment[0].add(100 * (10 ** decimals));
+        // users[0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281].deposits.push(Deposit(500 * (10 ** decimals), 1659082401));
+        // totalInvestment[0] = totalInvestment[0].add(500 * (10 ** decimals));
+        // updateTotalBonusInvestment(0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281);
+        // if(users[0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281].referrer);
+        // if(users[users[0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281].referrer].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[users[0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281].referrer].referrer);
         // // 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 <= 0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9
         // users[0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266].invitee.push(0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9);
         // users[0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9].referrer = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
-        // users[0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9].deposits.push(Deposit(300 * (10 ** decimals), 1658237534));
-        // totalInvestment[0] = totalInvestment[0].add(300 * (10 ** decimals));
+        // users[0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9].deposits.push(Deposit(500 * (10 ** decimals), 1659082401));
+        // totalInvestment[0] = totalInvestment[0].add(500 * (10 ** decimals));
+        // updateTotalBonusInvestment(0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9);
+        // if(users[0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9].referrer);
+        // if(users[users[0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9].referrer].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[users[0xb6bCcFC89AfD3ed07A0C9D6eAf170Ef3Fc3C94b9].referrer].referrer);
         // // 0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281 <= 0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF
         // users[0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281].invitee.push(0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF);
         // users[0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF].referrer = 0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281;
-        // users[0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF].deposits.push(Deposit(300 * (10 ** decimals), 1658237534));
+        // users[0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF].deposits.push(Deposit(300 * (10 ** decimals), 1659082401));
         // totalInvestment[0] = totalInvestment[0].add(300 * (10 ** decimals));
+        // updateTotalBonusInvestment(0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF);
+        // if(users[0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF].referrer);
+        // if(users[users[0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF].referrer].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[users[0xF284c7E0e43b4e5b4A94120c811b1B281f0700FF].referrer].referrer);
         // // 0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281 <= 0x0c7cDbF9Dc661D430f8a907a5EaE692cC7b7Dd90
         // users[0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281].invitee.push(0x0c7cDbF9Dc661D430f8a907a5EaE692cC7b7Dd90);
         // users[0x0c7cDbF9Dc661D430f8a907a5EaE692cC7b7Dd90].referrer = 0x44D7F2F272Ba8cDb84a748B89F326fA5cAcb8281;
@@ -79,8 +95,7 @@ contract IDO is Ownable {
     modifier checkStarttime() {
         require(
             block.timestamp >= starttime[0] && block.timestamp < starttime[1] ||
-            block.timestamp >= starttime[2] && block.timestamp < starttime[3] ||
-            block.timestamp >= starttime[4] && block.timestamp < starttime[5]
+            block.timestamp >= starttime[2] && block.timestamp < starttime[3] 
         , 'Out of time interval');
         _;
     }
@@ -90,7 +105,7 @@ contract IDO is Ownable {
     }
 
     function setStarttime(uint256[]  memory _starttime) public onlyOwner{
-        require(_starttime.length == 6, 'Error starttime');
+        require(_starttime.length == 4, 'Error starttime');
         starttime = _starttime;
     }
 
@@ -121,6 +136,14 @@ contract IDO is Ownable {
         return sum;
     }
 
+    function getMyInviteAmount(address _account) public view returns(uint256){
+        return users[_account].invitee.length;
+    }
+
+    function getMyInviteAddress(address _account,uint256 _index) public view returns(address){
+        return users[_account].invitee[_index];
+    }
+
     function getMyInvestment(address _account, uint256 _period) public view returns(uint256 myInvestment){
         if(_period == 0){
             return arrSum(users[_account].deposits, starttime[0] , starttime[1]);
@@ -128,18 +151,18 @@ contract IDO is Ownable {
         if(_period == 1){
             return arrSum(users[_account].deposits, starttime[2] , starttime[3]);
         }
-        if(_period == 2){
-            return arrSum(users[_account].deposits, starttime[4] , starttime[5]);
-        }
         return 0;
     }
 
-    function getWeighting(address _account) public view returns(uint256 weighting){
+    function getWeighting(address _account, uint256 _deadline) public view returns(uint256 weighting){
+        if(_account == 0x343e53D0d06FBF692336CcF871d4c89aD8B706Be){
+            return 100;
+        }
         address[] memory invitee = users[_account].invitee;
         // console.log("invitee length", invitee.length);
         for(uint256 i = 0; i < invitee.length; i++){
             Deposit[] memory deposits = users[invitee[i]].deposits;
-            uint256 totalDeposit = arrSum(deposits, 0, 9657885044);
+            uint256 totalDeposit = arrSum(deposits, 0, _deadline);
             // console.log("invitee", invitee[i], totalDeposit);
             if( totalDeposit >= approvedQuota){
                 weighting = weighting.add(10);
@@ -149,7 +172,7 @@ contract IDO is Ownable {
             // console.log("subInvitee length", invitee[i], sub_invitee.length);
             for(uint j = 0; j < sub_invitee.length; j++){
                 Deposit[] memory deposits = users[sub_invitee[j]].deposits;
-                uint256 totalDeposit = arrSum(deposits, 0, 9657885044);
+                uint256 totalDeposit = arrSum(deposits, 0, _deadline);
                 // console.log("subInvitee", sub_invitee[j], totalDeposit);
                 if( totalDeposit >= approvedQuota){
                     weighting = weighting.add(10);
@@ -169,10 +192,7 @@ contract IDO is Ownable {
         if(block.timestamp >= starttime[2] && block.timestamp < starttime[3]){
             return 1;
         }
-        if(block.timestamp >= starttime[4] && block.timestamp < starttime[5]){
-            return 2;
-        }
-        return 3;
+        return 2;
     }
 
     function getLockInvestment(address _account) public view returns(uint256 lockInvestment){
@@ -182,7 +202,7 @@ contract IDO is Ownable {
             if(IDO[0] >= totalInvestment[0]){
                 lockInvestment = lockInvestment.add(investment1);
             }else{
-                lockInvestment = lockInvestment.add(investment1.mul(IDO[0]).div(totalInvestment[0]));
+                lockInvestment = lockInvestment.add(investment1.mul(getWeighting(_account, starttime[1])).div(100).mul(IDO[0]).div(totalBonusInvestment[0]));
                 // console.log("IDO[0].div(totalInvestment[0])", lockInvestment);
             }
         }
@@ -192,18 +212,8 @@ contract IDO is Ownable {
             if(IDO[1] >= totalInvestment[1]){
                 lockInvestment = lockInvestment.add(investment2);
             }else{
-                lockInvestment = lockInvestment.add(investment2.mul(IDO[1]).div(totalInvestment[1]));
+                lockInvestment = lockInvestment.add(investment2.mul(getWeighting(_account, starttime[3])).div(100).mul(IDO[1]).div(totalBonusInvestment[1]));
                 // console.log("IDO[1].div(totalInvestment[1])", lockInvestment);
-            }
-        }
-        if(block.timestamp > starttime[5]){
-            uint256 investment3 = arrSum(users[_account].deposits, starttime[4] , starttime[5]);
-            // console.log("users[_account].deposits.length", users[_account].deposits.length);
-            if(IDO[2] >= totalInvestment[2]){
-                lockInvestment = lockInvestment.add(investment3);
-            }else{
-                lockInvestment = lockInvestment.add(investment3.mul(IDO[2]).div(totalInvestment[2]));
-                // console.log("IDO[2].div(totalInvestment[2])", lockInvestment);
             }
         }
         return lockInvestment;
@@ -219,20 +229,18 @@ contract IDO is Ownable {
         if(block.timestamp > starttime[3]){
             remainingInvestment = arrSum(users[_account].deposits, starttime[0] , starttime[3]);
         }
-        if(block.timestamp > starttime[5]){
-            remainingInvestment = arrSum(users[_account].deposits, starttime[0] , starttime[5]);
-        }
         // console.log("getLockInvestment",getLockInvestment(_account));
         remainingInvestment = remainingInvestment.sub(getLockInvestment(_account));
         // console.log("getRemainingInvestment",remainingInvestment);
         return remainingInvestment;
     }
 
+
     function withdrawRemainingInvestment() public checkStart {
         uint256 remainingInvestment = getRemainingInvestment(msg.sender);
-        require(remainingInvestment > 0 && remainingInvestment >= users[msg.sender].withdrawn, "Lack of balance");
+        require(remainingInvestment > 0 && remainingInvestment > users[msg.sender].withdrawn, "Lack of balance");
         remainingInvestment = remainingInvestment.sub(users[msg.sender].withdrawn);
-        require(remainingInvestment  <= 3000000000000000000000);
+        require(remainingInvestment  <= 1000000000000000000000);
         USDT.safeTransfer(msg.sender, remainingInvestment);
         users[msg.sender].withdrawn = users[msg.sender].withdrawn.add(remainingInvestment);
     }
@@ -255,7 +263,7 @@ contract IDO is Ownable {
         require(_inviter != 0x0000000000000000000000000000000000000000, "Inviter empty");
         require(_inviter != msg.sender, "You can't invite yourself");
         require(users[_inviter].referrer != msg.sender,"Your inviter's inviter can't be you");
-        uint256 maxInvestment = maxDeposit.mul(getWeighting(msg.sender)).div(100);
+        uint256 maxInvestment = maxDeposit;
         uint256 period = getWhichPeriod();
         uint256 alreadyInvestment = getMyInvestment(msg.sender, period);
         // console.log("maxDeposit", maxInvestment);
@@ -271,6 +279,33 @@ contract IDO is Ownable {
         USDT.safeTransferFrom(msg.sender, address(this), _amount);
         users[msg.sender].deposits.push(Deposit(_amount, block.timestamp));
         totalInvestment[period] = totalInvestment[period].add(_amount);
+        updateTotalBonusInvestment(msg.sender);
+        if(users[msg.sender].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[msg.sender].referrer);
+        if(users[users[msg.sender].referrer].referrer != 0x0000000000000000000000000000000000000000) updateTotalBonusInvestment(users[users[msg.sender].referrer].referrer);
+    }
+    
+    function updateTotalBonusInvestment(address _account) internal {
+        uint256 period = getWhichPeriod();
+        if(period == 0){
+            uint256 newBonusInvestment = getMyInvestment(_account, period).mul(getWeighting(_account, starttime[1])).div(100);
+            // console.log("updateTotalBonusInvestment", _account, newBonusInvestment, users[_account].bonusInvestment1);
+            if(users[_account].bonusInvestment1 == 0){
+                totalBonusInvestment[period] = totalBonusInvestment[period].add(newBonusInvestment);
+            }else{
+                totalBonusInvestment[period] = totalBonusInvestment[period].add(newBonusInvestment).sub(users[_account].bonusInvestment1);
+            }
+            users[_account].bonusInvestment1 = newBonusInvestment;
+        }
+        if(period == 1){
+            uint256 newBonusInvestment = getMyInvestment(_account, period).mul(getWeighting(_account, starttime[3])).div(100);
+            console.log("updateTotalBonusInvestment", _account, newBonusInvestment, users[_account].bonusInvestment2);
+            if(users[_account].bonusInvestment2 == 0){
+                totalBonusInvestment[period] = totalBonusInvestment[period].add(newBonusInvestment);
+            }else{
+                totalBonusInvestment[period] = totalBonusInvestment[period].add(newBonusInvestment).sub(users[_account].bonusInvestment2);
+            }
+            users[_account].bonusInvestment2 = newBonusInvestment;
+        }
     }
 
     function withdrawCoin() public onlyOwner checkStart{
