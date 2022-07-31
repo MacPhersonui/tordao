@@ -75,7 +75,7 @@ module.exports = {
         bscmain: {
             url: "https://bsc-dataseed4.defibit.io",
             accounts: [mnemonic],
-            gasPrice: 5000000000,
+            gasPrice: 7000000000,
             gasLimit: 21000,
         },
         clv:

@@ -209,7 +209,7 @@ const Home = ({
 
     const investment2 = () => {
         let investments = 0
-        if (period2 == 0 && new Date().getTime() > starttime.starttime2 * 1000) {
+        if (period2 == 0 || new Date().getTime() > starttime.starttime2 * 1000) {
             investments = myInvestment[1] * 1
         }
         if (period2 == 1 && new Date().getTime() > starttime.starttime5 * 1000) {
@@ -232,13 +232,16 @@ const Home = ({
 
     const tor2 = () => {
         let tor = 0
-        if (period2 == 0) {
-            console.log("tor2", IDO.IDO2, totalInvestment.totalInvestment2, IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1)
+        console.log("tor2", IDO.IDO2, totalInvestment.totalInvestment2, IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1)
+        if (period2 == 0 || new Date().getTime() > starttime.starttime2 * 1000) {
+            // console.log("tor2", IDO.IDO2, totalInvestment.totalInvestment2, IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1)
             if (IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1) {
                 tor += myInvestment[1] * 1 / torPrice[0]
             } else {
-                console.log("tor2", myInvestment[1], IDO.IDO2, totalBonusInvestment[0])
-                tor += myInvestment[1]* 1 / torPrice[0] * (IDO.IDO2 / totalBonusInvestment[0])
+                console.log("tor22", myInvestment[1], IDO.IDO2, totalBonusInvestment[0])
+                if (totalBonusInvestment[0] != 0){
+                    tor += myInvestment[1] * 1 / torPrice[0] * (IDO.IDO2 / totalBonusInvestment[0])
+                }
             }
         }
         if (period == 1) {
