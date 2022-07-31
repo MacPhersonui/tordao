@@ -177,6 +177,7 @@ const Home = ({
                 setTotalInvite(totalInvite)
                 const usdtBalance = await usdtContract.methods.balanceOf(account).call()
                 setUsdtBalance(utils.formatEther(usdtBalance))
+                
                 console.log("withdrawn", idoContract.methods)
             }
         }, 3000)
@@ -246,7 +247,7 @@ const Home = ({
                 tor += myInvestment[2] / torPrice[1] * (IDO.IDO3 / totalBonusInvestment[1])
             }
         }
-        return (utils.formatEther(new BigNumber(tor).toFixed()) * 1).toFixed(2)
+        return  0
     }
 
     const getProgress = () => {
