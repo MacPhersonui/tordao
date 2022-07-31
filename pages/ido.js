@@ -144,8 +144,8 @@ const Home = ({
                     IDO3: IDO3
                 })
                 console.log(IDO1, IDO2, IDO3)
-                const totalBonusInvestment1 = ido2Contract.methods.totalBonusInvestment(0).call()
-                const totalBonusInvestment2 = ido2Contract.methods.totalBonusInvestment(1).call()
+                const totalBonusInvestment1 = await ido2Contract.methods.totalBonusInvestment(0).call()
+                const totalBonusInvestment2 = await ido2Contract.methods.totalBonusInvestment(1).call()
                 setTotalBonusInvestment([totalBonusInvestment1, totalBonusInvestment2])
                 
                 const period = await idoContract.methods.getWhichPeriod().call()
@@ -235,9 +235,10 @@ const Home = ({
         if (period2 == 0) {
             console.log("tor2", IDO.IDO2, totalInvestment.totalInvestment2, IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1)
             if (IDO.IDO2 * 1 >= totalInvestment.totalInvestment2 * 1) {
-                tor += myInvestment[1] / torPrice[0]
+                tor += myInvestment[1] * 1 / torPrice[0]
             } else {
-                tor += myInvestment[1] / torPrice[0] * (IDO.IDO2 / totalBonusInvestment[0])
+                console.log("tor2", myInvestment[1], IDO.IDO2, totalBonusInvestment[0])
+                tor += myInvestment[1]* 1 / torPrice[0] * (IDO.IDO2 / totalBonusInvestment[0])
             }
         }
         if (period == 1) {
@@ -247,7 +248,8 @@ const Home = ({
                 tor += myInvestment[2] / torPrice[1] * (IDO.IDO3 / totalBonusInvestment[1])
             }
         }
-        return  0
+        console.log("tor", tor)
+        return (utils.formatEther(new BigNumber(tor).toFixed()) * 1).toFixed(2)
     }
 
     const getProgress = () => {
